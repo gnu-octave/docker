@@ -6,8 +6,8 @@
 # Provides a base Ubuntu image with the latest stable GNU Octave
 # <https://www.octave.org> installed.
 
-FROM        ubuntu:18.04
-MAINTAINER  Siko1056
+FROM  ubuntu:18.04 AS ubuntu1804build
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2020-10-01
 
@@ -198,7 +198,7 @@ RUN GLPK_VERSION=4.65    && \
 
 # Install Sundials
 
-RUN SUNDIALS_VERSION=5.3.0  && \
+RUN SUNDIALS_VERSION=5.4.0  && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://computation.llnl.gov/projects/sundials/download/sundials-${SUNDIALS_VERSION}.tar.gz" && \
@@ -225,7 +225,7 @@ RUN SUNDIALS_VERSION=5.3.0  && \
     rm -rf /tmp/build
 
 
-# Install Octave
+FROM ubuntu1804build AS octave520build
 
 RUN OCTAVE_VERSION=5.2.0  && \
     mkdir -p /tmp/build   && \
@@ -244,7 +244,7 @@ RUN OCTAVE_VERSION=5.2.0  && \
     rm -rf /tmp/build
 
 
-# Shrink image size
+FROM octave520build AS octave520
 
 RUN apt-get --yes remove \
       bison \
@@ -288,4 +288,6 @@ RUN apt-get --yes remove \
     rm -Rf /var/lib/apt/lists/*  && \
     rm -Rf /usr/share/doc
 
-CMD ["octave-cmd"]
+ENV LC_ALL=C
+
+CMD ["octave-cli"]
