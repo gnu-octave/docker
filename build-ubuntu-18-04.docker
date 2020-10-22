@@ -3,10 +3,9 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Provides a base Ubuntu image with the latest stable GNU Octave
-# <https://www.octave.org> installed.
+# Ubuntu 18.04 image to build GNU Octave <https://www.octave.org>.
 
-FROM  ubuntu:18.04 AS ubuntu1804build
+FROM  ubuntu:18.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2020-10-01
@@ -35,8 +34,6 @@ RUN apt-get --yes update  && \
       less \
       libblas-dev \
       libcurl4-gnutls-dev \
-      liblapack-dev \
-      libpcre3-dev \
       libfftw3-dev \
       libfltk1.3-dev \
       libfontconfig1-dev \
@@ -47,7 +44,9 @@ RUN apt-get --yes update  && \
       libgpgme11-dev \
       libgraphicsmagick++1-dev \
       libhdf5-serial-dev \
+      liblapack-dev \
       libosmesa6-dev \
+      libpcre3-dev \
       libqhull-dev \
       libqscintilla2-qt5-dev \
       libqt5opengl5-dev \
@@ -87,7 +86,7 @@ RUN apt-get --yes update  && \
 RUN OPENBLAS_VERSION=0.3.11 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
-    wget "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
+    wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
     tar -xf    v${OPENBLAS_VERSION}.tar.gz  && \
     cd OpenBLAS-${OPENBLAS_VERSION}         && \
     make -j8             \
@@ -108,7 +107,7 @@ RUN OPENBLAS_VERSION=0.3.11 && \
 RUN SUITE_SPARSE_VERSION=5.7.2  && \
     mkdir -p /tmp/build         && \
     cd       /tmp/build         && \
-    wget "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
+    wget -q "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
     tar -xf       v${SUITE_SPARSE_VERSION}.tar.gz  && \
     cd SuiteSparse-${SUITE_SPARSE_VERSION}         && \
     make -j8 library                           \
@@ -132,7 +131,7 @@ RUN SUITE_SPARSE_VERSION=5.7.2  && \
 RUN ARPACK_NG_VERSION=3.7.0 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
-    wget "https://github.com/opencollab/arpack-ng/archive/${ARPACK_NG_VERSION}.tar.gz" && \
+    wget -q "https://github.com/opencollab/arpack-ng/archive/${ARPACK_NG_VERSION}.tar.gz" && \
     tar -xf      ${ARPACK_NG_VERSION}.tar.gz  && \
     cd arpack-ng-${ARPACK_NG_VERSION}         && \
     ./bootstrap                 && \
@@ -156,7 +155,7 @@ RUN ARPACK_NG_VERSION=3.7.0 && \
 RUN QRUPDATE_VERSION=1.1.2 && \
     mkdir -p /tmp/build    && \
     cd       /tmp/build    && \
-    wget "http://downloads.sourceforge.net/project/qrupdate/qrupdate/1.2/qrupdate-${QRUPDATE_VERSION}.tar.gz"  && \
+    wget -q "http://downloads.sourceforge.net/project/qrupdate/qrupdate/1.2/qrupdate-${QRUPDATE_VERSION}.tar.gz"  && \
     tar -xf qrupdate-${QRUPDATE_VERSION}.tar.gz       && \
     cd      qrupdate-${QRUPDATE_VERSION}              && \
     make -j8                                             \
@@ -183,7 +182,7 @@ RUN QRUPDATE_VERSION=1.1.2 && \
 RUN GLPK_VERSION=4.65    && \
     mkdir -p /tmp/build  && \
     cd       /tmp/build  && \
-    wget "https://ftp.gnu.org/gnu/glpk/glpk-${GLPK_VERSION}.tar.gz"  && \
+    wget -q "https://ftp.gnu.org/gnu/glpk/glpk-${GLPK_VERSION}.tar.gz"  && \
     tar -xf glpk-${GLPK_VERSION}.tar.gz  && \
     cd      glpk-${GLPK_VERSION}         && \
     ./configure             \
@@ -223,71 +222,3 @@ RUN SUNDIALS_VERSION=5.4.0  && \
     make -j4          && \
     make install      && \
     rm -rf /tmp/build
-
-
-FROM ubuntu1804build AS octave520build
-
-RUN OCTAVE_VERSION=5.2.0  && \
-    mkdir -p /tmp/build   && \
-    cd       /tmp/build   && \
-    wget "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
-    tar -xf octave-${OCTAVE_VERSION}.tar.gz  && \
-    cd      octave-${OCTAVE_VERSION}         && \
-    ./configure                                 \
-      F77_INTEGER_8_FLAG='-fdefault-integer-8'  \
-      --prefix=/usr                             \
-      --enable-64                               \
-      --with-blas='-lopenblas'               && \
-    make -j8      && \
-    make check    && \
-    make install  && \
-    rm -rf /tmp/build
-
-
-FROM octave520build AS octave520
-
-RUN apt-get --yes remove \
-      bison \
-      flex \
-      icoutils \
-      libcurl4-gnutls-dev \
-      libreadline-dev \
-      libsndfile1-dev \
-      portaudio19-dev \
-      qtbase5-dev \
-      qttools5-dev \
-      qttools5-dev-tools \
-      texlive \
-      texlive-generic-recommended && \
-    apt-get --yes install \
-      fonts-ipafont-gothic \
-      fonts-noto-color-emoji \
-      info \
-      libcurl3-gnutls \
-      libgnutls28-dev \
-      libmpfr-dev \
-      libportaudio2 \
-      libqt5gui5 \
-      libqt5help5 \
-      libqt5network5 \
-      libqt5printsupport5 \
-      libqt5widgets5 \
-      libqt5xml5 \
-      libqscintilla2-qt5-13 \
-      libreadline7 \
-      libsndfile1 \
-      python3-pip                && \
-    # Install required python packages
-    #   - sympy, see https://savannah.gnu.org/bugs/?58491
-    pip3 install --upgrade --no-cache-dir \
-      sympy==1.5.1               && \
-    apt-get --yes remove            \
-      python3-pip                && \
-    apt-get --yes clean          && \
-    apt-get --yes autoremove     && \
-    rm -Rf /var/lib/apt/lists/*  && \
-    rm -Rf /usr/share/doc
-
-ENV LC_ALL=C
-
-CMD ["octave-cli"]

@@ -1,0 +1,92 @@
+# gnu-octave/docker
+
+# Please follow docker best practices
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
+
+# Ubuntu 18.04 image to build GNU Octave <https://www.octave.org>.
+
+FROM  ubuntu:18.04
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
+
+ENV LAST_UPDATED=2020-10-01
+
+# Install security updates and required packages.
+
+RUN apt-get --yes update  && \
+    apt-get --yes upgrade && \
+    apt-get --yes install \
+      autoconf \
+      automake \
+      clang \
+      cmake \
+      dbus \
+      epstool \
+      fonts-ipafont-gothic \
+      fonts-noto-color-emoji \
+      g++ \
+      gcc \
+      gfortran \
+      git \
+      gnuplot \
+      gperf \
+      gzip \
+      info \
+      less \
+      libblas-dev \
+      libcurl3-gnutls \
+      libpcre3-dev \
+      libfftw3-dev \
+      libfltk1.3-dev \
+      libfontconfig1-dev \
+      libfreetype6-dev \
+      libgl1-mesa-dev \
+      libgl2ps-dev \
+      libgmp-dev \
+      libgnutls28-dev \
+      libgpgme11-dev \
+      libgraphicsmagick++1-dev \
+      libhdf5-serial-dev \
+      liblapack-dev \
+      libmpfr-dev \
+      libosmesa6-dev \
+      libportaudio2 \
+      libqhull-dev \
+      libqscintilla2-qt5-13 \
+      libqt5gui5 \
+      libqt5help5 \
+      libqt5network5 \
+      libqt5printsupport5 \
+      libqt5widgets5 \
+      libqt5xml5 \
+      libreadline7 \
+      librsvg2-bin \
+      libseccomp-dev \
+      libsndfile1 \
+      libssl-dev \
+      libtool \
+      libxft-dev \
+      lpr \
+      make \
+      mercurial \
+      openjdk-11-jdk \
+      perl \
+      pkg-config \
+      pstoedit \
+      python3-pip \
+      tar \
+      texinfo \
+      transfig \
+      unzip \
+      wget \
+      zlib1g-dev \
+      zip                        && \
+    # Install required python packages
+    #   - sympy, see https://savannah.gnu.org/bugs/?58491
+    pip3 install --upgrade --no-cache-dir \
+      sympy==1.5.1               && \
+    apt-get --yes remove            \
+      python3-pip                && \
+    apt-get --yes clean          && \
+    apt-get --yes autoremove     && \
+    rm -Rf /var/lib/apt/lists/*  && \
+    rm -Rf /usr/share/doc

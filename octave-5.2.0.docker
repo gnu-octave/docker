@@ -1,0 +1,19 @@
+# gnu-octave/docker
+
+# Please follow docker best practices
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
+
+# Provides a base Ubuntu image with the latest stable GNU Octave
+# <https://www.octave.org> installed.
+
+FROM  gnu-octave/octave:runtime-ubuntu-18.04
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
+
+ENV LAST_UPDATED=2020-10-01
+
+COPY --from=gnu-octave/octave:build-octave-5.2.0 \
+     /usr/lib/octave/ /usr/lib/octave/
+
+ENV LC_ALL=C
+
+CMD ["octave-cli"]
