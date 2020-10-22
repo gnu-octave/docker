@@ -3,7 +3,7 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Provides GNU Octave 5.1.0 <https://www.octave.org> based on Ubuntu 18.04.
+# Provides GNU Octave 4.4.1 <https://www.octave.org> based on Ubuntu 18.04.
 
 FROM  gnuoctave/octave:build-octave-5 AS build
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
@@ -13,7 +13,7 @@ ENV LAST_UPDATED=2020-10-01
 
 # Install Octave
 
-RUN OCTAVE_VERSION=5.1.0  && \
+RUN OCTAVE_VERSION=4.4.1  && \
     mkdir -p /tmp/build   && \
     cd       /tmp/build   && \
     wget "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
