@@ -209,7 +209,7 @@ RUN SUNDIALS_VERSION=5.4.0  && \
       -DEXAMPLES_ENABLE_C=OFF                      \
       -DKLU_ENABLE=ON                              \
       -DKLU_INCLUDE_DIR=/usr/include/suitesparse   \
-      -DKLU_LIBRARY_DIR=/usr/lib/x86_64-linux-gnu  \
+      -DKLU_LIBRARY_DIR=/usr/lib                   \
       -DBUILD_ARKODE=OFF                           \
       -DBUILD_CVODE=OFF                            \
       -DBUILD_CVODES=OFF                           \
@@ -219,6 +219,6 @@ RUN SUNDIALS_VERSION=5.4.0  && \
       -DBUILD_CPODES=OFF                           \
       -DCMAKE_INSTALL_PREFIX=/usr                  \
       ..              && \
-    make -j4          && \
+    make -j8          && \
     make install      && \
     rm -rf /tmp/build
