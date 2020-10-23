@@ -13,7 +13,9 @@ ENV LAST_UPDATED=2020-10-01
 
 # Install Octave
 
-ARG OCTAVE_VERSION=${DOCKER_TAG}
+# Specified by `DOCKER_TAG`.
+# https://docs.docker.com/docker-hub/builds/advanced/#environment-variables-for-building-and-testing
+ARG OCTAVE_VERSION
 
 RUN mkdir -p /tmp/build   && \
     cd       /tmp/build   && \
