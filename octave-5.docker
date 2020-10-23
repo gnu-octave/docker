@@ -5,6 +5,8 @@
 
 # Provides GNU Octave <https://www.octave.org> based on Ubuntu 18.04.
 
+ARG OCTAVE_VERSION=${DOCKER_TAG}
+
 FROM  gnuoctave/octave:build-octave-5 AS build
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
@@ -13,8 +15,7 @@ ENV LAST_UPDATED=2020-10-01
 
 # Install Octave
 
-RUN OCTAVE_VERSION=${DOCKER_TAG}  && \
-    mkdir -p /tmp/build   && \
+RUN mkdir -p /tmp/build   && \
     cd       /tmp/build   && \
     wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
     tar -xf octave-${OCTAVE_VERSION}.tar.gz  && \
