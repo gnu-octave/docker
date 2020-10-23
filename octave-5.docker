@@ -17,8 +17,6 @@ ENV LAST_UPDATED=2020-10-01
 # https://docs.docker.com/docker-hub/builds/advanced/#environment-variables-for-building-and-testing
 ARG OCTAVE_VERSION
 
-RUN echo ${OCTAVE_VERSION} && echo " | " && echo ${DOCKER_TAG}
-
 RUN mkdir -p /tmp/build   && \
     cd       /tmp/build   && \
     wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
