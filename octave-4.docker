@@ -1,0 +1,74 @@
+# gnu-octave/docker
+
+# Please follow docker best practices
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
+
+# Provides GNU Octave <https://www.octave.org> based on Ubuntu 16.04.
+
+FROM  gnuoctave/octave:build-octave-4 AS build
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
+
+ENV LAST_UPDATED=2020-11-01
+
+
+# Install Octave
+
+# Specified by `DOCKER_TAG`.
+# https://docs.docker.com/docker-hub/builds/advanced/#environment-variables-for-building-and-testing
+ARG OCTAVE_VERSION
+
+RUN mkdir -p /tmp/build   && \
+    cd       /tmp/build   && \
+    wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
+    tar -xf octave-${OCTAVE_VERSION}.tar.gz  && \
+    cd      octave-${OCTAVE_VERSION}         && \
+    ./configure   && \
+    make -j8      && \
+    make check    && \
+    make install  && \
+    rm -rf /tmp/build
+
+
+# Shrink the image from dev to runtime libraries
+
+RUN apt-get --yes remove \
+      bison \
+      flex \
+      icoutils \
+      libcurl4-gnutls-dev \
+      libreadline-dev \
+      libsndfile1-dev \
+      portaudio19-dev \
+      libqscintilla2-dev \
+      libqt4-dev \
+      libqtcore4 \
+      libqtwebkit4 \
+      libqt4-network \
+      libqtgui4 \
+      libqt4-opengl-dev \
+      texlive \
+      texlive-generic-recommended && \
+    apt-get --yes install \
+      info \
+      libcurl3-gnutls \
+      libgnutls28-dev \
+      libmpfr-dev \
+      libportaudio2 \
+      libreadline6 \
+      libsndfile1                && \
+    apt-get --yes clean          && \
+    apt-get --yes autoremove     && \
+    rm -Rf /var/lib/apt/lists/*  && \
+    rm -Rf /usr/share/doc
+
+
+# Final runtime image
+
+FROM  ubuntu:16.04
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
+
+COPY --from=build / /
+
+ENV LC_ALL=C
+
+CMD ["octave-cli"]

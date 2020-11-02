@@ -1,0 +1,87 @@
+# gnu-octave/docker
+
+# Please follow docker best practices
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
+
+# Ubuntu 16.04 image to build GNU Octave <https://www.octave.org>.
+
+FROM  ubuntu:16.04
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
+
+ENV LAST_UPDATED=2020-11-01
+
+# Install security updates and required packages.
+
+RUN apt-get --yes update  && \
+    apt-get --yes upgrade && \
+    apt-get --yes install \
+      autoconf \
+      automake \
+      bison \
+      dbus \
+      epstool \
+      flex \
+      g++ \
+      gcc \
+      gfortran \
+      git \
+      gnuplot-x11 \
+      gperf \
+      gzip \
+      icoutils \
+      less \
+      libarpack2-dev \
+      libblas-dev \
+      libcurl4-gnutls-dev \
+      libfftw3-dev \
+      libfltk1.3-dev \
+      libfontconfig1-dev \
+      libfreetype6-dev \
+      libgl1-mesa-dev \
+      libgl2ps-dev \
+      libglpk-dev \
+      libgraphicsmagick++1-dev \
+      libhdf5-serial-dev \
+      liblapack-dev \
+      libopenblas-dev \
+      libosmesa6-dev \
+      libpcre3-dev \
+      libqhull-dev \
+      libqrupdate-dev \
+      libqscintilla2-dev \
+      libqt4-dev \
+      libqtcore4 \
+      libqtwebkit4 \
+      libqt4-network \
+      libqtgui4 \
+      libqt4-opengl-dev \
+      libreadline-dev \
+      librsvg2-bin \
+      libsndfile1-dev \
+      libsuitesparse-dev \
+      libtool \
+      libxft-dev \
+      llvm-dev \
+      lpr \
+      make \
+      mercurial \
+      openjdk-8-jdk \
+      perl \
+      pkg-config \
+      portaudio19-dev \
+      pstoedit \
+      qtbase5-dev \
+      qttools5-dev \
+      qttools5-dev-tools \
+      rsync \
+      tar \
+      texinfo \
+      texlive \
+      texlive-generic-recommended \
+      transfig \
+      unzip \
+      wget \
+      zlib1g-dev \
+      zip                        && \
+    apt-get --yes clean          && \
+    apt-get --yes autoremove
