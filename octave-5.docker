@@ -54,7 +54,6 @@ RUN apt-get --yes remove \
       info \
       libcurl3-gnutls \
       libgnutls28-dev \
-      libmpfr-dev \
       libportaudio2 \
       libqt5gui5 \
       libqt5help5 \

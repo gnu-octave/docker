@@ -46,6 +46,7 @@ RUN apt-get --yes update  && \
       libhdf5-serial-dev \
       liblapack-dev \
       libosmesa6-dev \
+      libmpfr-dev \
       libpcre3-dev \
       libqhull-dev \
       libqscintilla2-qt5-dev \

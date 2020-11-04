@@ -45,6 +45,7 @@ RUN apt-get --yes update  && \
       libgraphicsmagick++1-dev \
       libhdf5-serial-dev \
       liblapack-dev \
+      libmpfr-dev \
       libosmesa6-dev \
       libpcre3-dev \
       libqhull-dev \
