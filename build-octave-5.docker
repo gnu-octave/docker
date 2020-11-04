@@ -83,7 +83,7 @@ RUN apt-get --yes update  && \
 
 # Install OpenBLAS
 
-RUN OPENBLAS_VERSION=0.3.11 && \
+RUN OPENBLAS_VERSION=0.3.12 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
@@ -104,7 +104,7 @@ RUN OPENBLAS_VERSION=0.3.11 && \
 
 # Install SuiteSparse
 
-RUN SUITE_SPARSE_VERSION=5.7.2  && \
+RUN SUITE_SPARSE_VERSION=5.8.1  && \
     mkdir -p /tmp/build         && \
     cd       /tmp/build         && \
     wget -q "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
