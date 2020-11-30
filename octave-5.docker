@@ -8,7 +8,7 @@
 FROM  gnuoctave/octave:build-octave-5 AS build
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2020-11-01
+ENV LAST_UPDATED=2020-12-01
 
 
 # Install Octave
