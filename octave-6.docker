@@ -1,0 +1,89 @@
+# gnu-octave/docker
+
+# Please follow docker best practices
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
+
+# Provides GNU Octave <https://www.octave.org> based on Ubuntu 18.04.
+
+FROM  gnuoctave/octave:build-octave-6 AS build
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
+
+ENV LAST_UPDATED=2020-12-01
+
+
+# Install Octave
+
+# Specified by `DOCKER_TAG`.
+# https://docs.docker.com/docker-hub/builds/advanced/#environment-variables-for-building-and-testing
+ARG OCTAVE_VERSION
+
+RUN mkdir -p /tmp/build   && \
+    cd       /tmp/build   && \
+    wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
+    tar -xf octave-${OCTAVE_VERSION}.tar.gz  && \
+    cd      octave-${OCTAVE_VERSION}         && \
+    ./configure                                 \
+      F77_INTEGER_8_FLAG='-fdefault-integer-8'  \
+      --prefix=/usr                             \
+      --enable-64                               \
+      --with-blas='-lopenblas'               && \
+    make -j8      && \
+    make check    && \
+    make install  && \
+    rm -rf /tmp/build
+
+
+# Shrink the image from dev to runtime libraries
+
+RUN apt-get --yes remove \
+      bison \
+      flex \
+      icoutils \
+      libcurl4-gnutls-dev \
+      libreadline-dev \
+      libsndfile1-dev \
+      portaudio19-dev \
+      qtbase5-dev \
+      qttools5-dev \
+      qttools5-dev-tools \
+      texlive \
+      texlive-generic-recommended && \
+    apt-get --yes install \
+      fonts-ipafont-gothic \
+      fonts-noto-color-emoji \
+      info \
+      libcurl3-gnutls \
+      libgnutls28-dev \
+      libportaudio2 \
+      libqt5gui5 \
+      libqt5help5 \
+      libqt5network5 \
+      libqt5printsupport5 \
+      libqt5widgets5 \
+      libqt5xml5 \
+      libqscintilla2-qt5-13 \
+      libreadline7 \
+      libsndfile1 \
+      python3-pip                && \
+    # Install required python packages
+    #   - sympy, see https://savannah.gnu.org/bugs/?58491
+    pip3 install --upgrade --no-cache-dir \
+      sympy==1.5.1               && \
+    apt-get --yes remove            \
+      python3-pip                && \
+    apt-get --yes clean          && \
+    apt-get --yes autoremove     && \
+    rm -Rf /var/lib/apt/lists/*  && \
+    rm -Rf /usr/share/doc
+
+
+# Final runtime image
+
+FROM  ubuntu:18.04
+LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
+
+COPY --from=build / /
+
+ENV LC_ALL=C
+
+CMD ["octave-cli"]
