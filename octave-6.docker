@@ -5,10 +5,10 @@
 
 # Provides GNU Octave <https://www.octave.org> based on Ubuntu 18.04.
 
-FROM  gnuoctave/octave:build-octave-6 AS build
+FROM  gnuoctave/build-octave:6 AS build
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2020-12-01
+ENV LAST_UPDATED=2021-01-01
 
 
 # Install Octave
