@@ -2,6 +2,8 @@
 
 ## Helper script to build GNU Octave Docker versions.
 
+LOG_DIR=logs
+
 # No need to build these versions, DockerHub can build them
 #  5.2.0 \
 #  5.1.0 \
@@ -31,6 +33,8 @@ fi
 ## Get credentials
 source ./SECRETS
 
+mkdir -p ${LOG_DIR}
+
 ## Build build images
 ## Currently not needed, DockerHub can build them
 for VER in #4 5 6
@@ -42,7 +46,7 @@ do
   ${CONTAINER_CMD} build \
     --file build-octave-${VER%%.*}.docker \
     --tag  ${TAG} \
-    -
+    . 2>&1 | tee ${LOG_DIR}/build-oct-${VER}-$(date +%F_%H-%M-%S).log.txt
   ${CONTAINER_CMD} login docker.io \
     --username ${USERNAME} \
     --password ${PASSWORD}
@@ -55,11 +59,12 @@ do
   echo "--------------------------------------------------"
   echo "-  Build ${TAG}"
   echo "--------------------------------------------------"
+  exit
   ${CONTAINER_CMD} build \
     --file      octave-${VER%%.*}.docker \
     --tag       ${TAG} \
     --build-arg OCTAVE_VERSION=${VER} \
-    -
+    . 2>&1 | tee ${LOG_DIR}/oct-${VER}-$(date +%F_%H-%M-%S).log.txt
   ${CONTAINER_CMD} login docker.io \
     --username ${USERNAME} \
     --password ${PASSWORD}
