@@ -59,7 +59,6 @@ do
   echo "--------------------------------------------------"
   echo "-  Build ${TAG}"
   echo "--------------------------------------------------"
-  exit
   ${CONTAINER_CMD} build \
     --file      octave-${VER%%.*}.docker \
     --tag       ${TAG} \
