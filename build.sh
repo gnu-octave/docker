@@ -4,21 +4,19 @@
 
 LOG_DIR=logs
 
-# No need to build these versions, DockerHub can build them
-#  5.2.0 \
-#  5.1.0 \
-#  4.0.3 \
-#  4.0.2 \
-#  4.0.1 \
-#  4.0.0 \
 OCTAVE_VERSIONS="\
   6.1.0 \
+  5.2.0 \
+  5.1.0 \
   4.4.1 \
   4.4.0 \
   4.2.2 \
   4.2.1 \
-  4.2.0 "
-
+  4.2.0 \
+  4.0.3 \
+  4.0.2 \
+  4.0.1 \
+  4.0.0 "
 
 ## Detect supported container management tool.
 if [ -x "$(command -v docker)" ]; then
