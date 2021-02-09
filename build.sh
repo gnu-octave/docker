@@ -45,11 +45,11 @@ publish_image () {
 }
 
 ## Helper function to push the build logs to some public web server.
-##   $SCP_CMD see SECRETS
-##   $1       full path to a single log file
+##   $SCP_TARGET_DIR see SECRETS
+##   $1              full path to a single log file
 publish_log () {
-  if [ ! -z "$SCP_CMD" ]; then
-    $SCP_CMD $1
+  if [ ! -z "$SCP_TARGET_DIR" ]; then
+    scp  $1  $SCP_TARGET_DIR
   fi
 }
 
