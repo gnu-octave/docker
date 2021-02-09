@@ -31,6 +31,28 @@ fi
 ## Get credentials
 source ./SECRETS
 
+## Helper function to push a built image to DockerHub.
+##   $DOCKERHUB_USERNAME see SECRETS
+##   $DOCKERHUB_PASSWORD see SECRETS
+##   $1                  image TAG
+publish_image () {
+  if [ ! -z "$DOCKERHUB_USERNAME" ]; then
+    ${CONTAINER_CMD} login docker.io \
+      --username ${DOCKERHUB_USERNAME} \
+      --password ${DOCKERHUB_PASSWORD}
+    ${CONTAINER_CMD} image push $1
+  fi
+}
+
+## Helper function to push the build logs to some public web server.
+##   $SCP_CMD see SECRETS
+##   $1       full path to a single log file
+publish_log () {
+  if [ ! -z "$SCP_CMD" ]; then
+    $SCP_CMD $1
+  fi
+}
+
 mkdir -p ${LOG_DIR}
 
 ## Build build images
@@ -41,14 +63,14 @@ do
   echo "--------------------------------------------------"
   echo "-  Build ${TAG}"
   echo "--------------------------------------------------"
+  LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_build-oct-${VER}.log.html
+  printf "<pre>\n"          >> ${LOG_FILE}
   ${CONTAINER_CMD} build \
     --file build-octave-${VER%%.*}.docker \
-    --tag  ${TAG} \
-    . 2>&1 | tee ${LOG_DIR}/build-oct-${VER}-$(date +%F_%H-%M-%S).log.txt
-  ${CONTAINER_CMD} login docker.io \
-    --username ${USERNAME} \
-    --password ${PASSWORD}
-  ${CONTAINER_CMD} image push ${TAG}
+    --tag  ${TAG} . 2>&1 | tee ${LOG_FILE}
+  printf "</pre>\n"         >> ${LOG_FILE}
+  publish_image ${TAG}
+  publish_log   ${LOG_FILE}
 done
 
 for VER in ${OCTAVE_VERSIONS}
@@ -62,14 +84,13 @@ do
   if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
     BUILD_VER=5
   fi
+  LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_oct-${VER}.log.html
+  printf "<pre>\n"          >> ${LOG_FILE}
   ${CONTAINER_CMD} build \
     --file      octave-$BUILD_VER.docker \
-    --tag       ${TAG} \
     --build-arg OCTAVE_VERSION=${VER} \
-    . 2>&1 | tee ${LOG_DIR}/oct-${VER}-$(date +%F_%H-%M-%S).log.txt
-  ${CONTAINER_CMD} login docker.io \
-    --username ${USERNAME} \
-    --password ${PASSWORD}
-  ${CONTAINER_CMD} image push ${TAG}
+    --tag  ${TAG} . 2>&1 | tee ${LOG_FILE}
+  printf "</pre>\n"         >> ${LOG_FILE}
+  publish_image ${TAG}
+  publish_log   ${LOG_FILE}
 done
-
