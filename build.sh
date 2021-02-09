@@ -57,8 +57,13 @@ do
   echo "--------------------------------------------------"
   echo "-  Build ${TAG}"
   echo "--------------------------------------------------"
+  BUILD_VER=${VER%%.*}
+  ## Exception, because of too old libraries.
+  if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
+    BUILD_VER=5
+  fi
   ${CONTAINER_CMD} build \
-    --file      octave-${VER%%.*}.docker \
+    --file      octave-$BUILD_VER.docker \
     --tag       ${TAG} \
     --build-arg OCTAVE_VERSION=${VER} \
     . 2>&1 | tee ${LOG_DIR}/oct-${VER}-$(date +%F_%H-%M-%S).log.txt
