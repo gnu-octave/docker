@@ -12,7 +12,8 @@ ENV LAST_UPDATED=2021-02-01
 
 # Install JupyterLab
 
-RUN apt-get --yes update  && \
+RUN apt-get --yes clean   && \
+    apt-get --yes update  && \
     apt-get --yes upgrade && \
     apt-get --yes install    \
       python3-pip         && \
