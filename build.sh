@@ -103,6 +103,7 @@ do
 done
 
 ## Build Octave JupyterLab image.
+cd jupyterlab
 VER="jupyterlab"
 TAG="docker.io/gnuoctave/octave:${VER}"
 echo "--------------------------------------------------"
@@ -112,11 +113,12 @@ LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_oct-${VER}.log.txt
 ${CONTAINER_CMD} rmi ${TAG}
 ${CONTAINER_CMD} build \
   --no-cache \
-  --file JupyterLab.docker \
+  --file Dockerfile \
   --tag  ${TAG} \
   . 2>&1 | tee ${LOG_FILE}
 publish_log    ${LOG_FILE}
 publish_image  ${TAG}
+cd ..
 
 ## Save disk space and prune unused images.
 ## Octave builds really require lots of disk space!
