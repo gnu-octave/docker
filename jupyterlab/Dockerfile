@@ -63,6 +63,9 @@ ENV SHELL=/bin/bash \
     LANGUAGE=en_US.UTF-8 \
     HOME=/home/$NB_USER
 
+ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /tini
+RUN chmod +x /tini
+
 # Copy a script that we will use to correct permissions after running certain commands
 COPY fix-permissions /usr/local/bin/fix-permissions
 RUN chmod a+rx /usr/local/bin/fix-permissions
@@ -81,9 +84,6 @@ USER $NB_UID
 EXPOSE 8888
 
 # Configure container startup
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
 ENTRYPOINT ["/tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
