@@ -16,7 +16,8 @@ RUN chmod 777 /tmp        && \
     apt-get --yes update  && \
     apt-get --yes install    \
       locales                \
-      python3-pip         && \
+      python3-pip            \
+      sudo                && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
     pip3 install --upgrade --no-cache-dir \
