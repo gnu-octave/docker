@@ -1,6 +1,6 @@
 digraph hierarchy {
   rankdir="LR";
-  node [shape=box style=filled fillcolor=yellow];
+  node [shape=box style=filled fillcolor=yellow fontname="helvetica"];
   b4 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>4</FONT></B>>];
   b5 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>5</FONT></B>>];
   b6 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>6</FONT></B>>];
