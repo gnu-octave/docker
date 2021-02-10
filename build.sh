@@ -59,7 +59,7 @@ mkdir -p ${LOG_DIR}
 ## Octave builds really require lots of disk space!
 ${CONTAINER_CMD} image prune --force
 
-## Build build images
+## Build Octave build images.
 ## Currently not needed, DockerHub can build them :-)
 for VER in #4 5 6
 do
@@ -78,6 +78,7 @@ do
   publish_image  ${TAG}
 done
 
+## Build Octave images.
 for VER in ${OCTAVE_VERSIONS}
 do
   TAG="docker.io/gnuoctave/octave:${VER}"
@@ -100,6 +101,22 @@ do
   publish_log    ${LOG_FILE}
   publish_image  ${TAG}
 done
+
+## Build Octave JupyterLab image.
+VER="jupyterlab"
+TAG="docker.io/gnuoctave/octave:${VER}"
+echo "--------------------------------------------------"
+echo "-  Build ${TAG}"
+echo "--------------------------------------------------"
+LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_oct-${VER}.log.txt
+${CONTAINER_CMD} rmi ${TAG}
+${CONTAINER_CMD} build \
+  --no-cache \
+  --file JupyterLab.docker \
+  --tag  ${TAG} \
+  . 2>&1 | tee ${LOG_FILE}
+publish_log    ${LOG_FILE}
+publish_image  ${TAG}
 
 ## Save disk space and prune unused images.
 ## Octave builds really require lots of disk space!
