@@ -1,6 +1,6 @@
 #!/bin/sh
 
-## Helper script to build GNU Octave Docker versions.
+## Helper script to build GNU Octave Docker images.
 
 LOG_DIR=logs
 
@@ -55,22 +55,27 @@ publish_log () {
 
 mkdir -p ${LOG_DIR}
 
+## Save disk space and prune unused images.
+## Octave builds really require lots of disk space!
+${CONTAINER_CMD} image prune --force
+
 ## Build build images
-## Currently not needed, DockerHub can build them
+## Currently not needed, DockerHub can build them :-)
 for VER in #4 5 6
 do
   TAG="docker.io/gnuoctave/octave-build:${VER}"
   echo "--------------------------------------------------"
   echo "-  Build ${TAG}"
   echo "--------------------------------------------------"
-  LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_build-oct-${VER}.log.html
-  printf "<pre>\n"          >> ${LOG_FILE}
+  LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_build-oct-${VER}.log.txt
+  ${CONTAINER_CMD} rmi ${TAG}
   ${CONTAINER_CMD} build \
+    --no-cache \
     --file build-octave-${VER%%.*}.docker \
-    --tag  ${TAG} . 2>&1 | tee ${LOG_FILE}
-  printf "</pre>\n"         >> ${LOG_FILE}
-  publish_image ${TAG}
-  publish_log   ${LOG_FILE}
+    --tag  ${TAG} \
+    . 2>&1 | tee ${LOG_FILE}
+  publish_log    ${LOG_FILE}
+  publish_image  ${TAG}
 done
 
 for VER in ${OCTAVE_VERSIONS}
@@ -84,13 +89,18 @@ do
   if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
     BUILD_VER=5
   fi
-  LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_oct-${VER}.log.html
-  printf "<pre>\n"          >> ${LOG_FILE}
+  LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_oct-${VER}.log.txt
+  ${CONTAINER_CMD} rmi ${TAG}
   ${CONTAINER_CMD} build \
-    --file      octave-$BUILD_VER.docker \
+    --no-cache \
+    --file      octave-${BUILD_VER}.docker \
     --build-arg OCTAVE_VERSION=${VER} \
-    --tag  ${TAG} . 2>&1 | tee ${LOG_FILE}
-  printf "</pre>\n"         >> ${LOG_FILE}
-  publish_image ${TAG}
-  publish_log   ${LOG_FILE}
+    --tag  ${TAG} \
+    . 2>&1 | tee ${LOG_FILE}
+  publish_log    ${LOG_FILE}
+  publish_image  ${TAG}
 done
+
+## Save disk space and prune unused images.
+## Octave builds really require lots of disk space!
+${CONTAINER_CMD} image prune --force
