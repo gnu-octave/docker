@@ -12,7 +12,8 @@ ENV LAST_UPDATED=2021-02-01
 
 # Install JupyterLab
 
-RUN apt-get --yes install    \
+RUN apt-get --yes update  && \
+    apt-get --yes install    \
       python3-pip         && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
