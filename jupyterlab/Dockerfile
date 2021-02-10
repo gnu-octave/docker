@@ -15,6 +15,7 @@ ENV LAST_UPDATED=2021-02-01
 RUN chmod 777 /tmp        && \
     apt-get --yes update  && \
     apt-get --yes install    \
+      locales                \
       python3-pip         && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
