@@ -22,8 +22,10 @@ OCTAVE_VERSIONS="\
 ## Detect supported container management tool.
 if [ -x "$(command -v docker)" ]; then
   CONTAINER_CMD=docker
+  BUILD_FLAGS=
 elif [ -x "$(command -v podman)" ]; then
   CONTAINER_CMD=podman
+  BUILD_FLAGS="--format=docker"
 else
   echo "ERROR: Cannot find 'docker' or 'podman'."
   exit 1
@@ -70,7 +72,7 @@ do
   echo "--------------------------------------------------"
   LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_build-oct-${VER}.log.txt
   ${CONTAINER_CMD} rmi ${TAG}
-  ${CONTAINER_CMD} build \
+  ${CONTAINER_CMD} build ${BUILD_FLAGS} \
     --no-cache \
     --file build-octave-${VER%%.*}.docker \
     --tag  ${TAG} \
@@ -93,7 +95,7 @@ do
   fi
   LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_oct-${VER}.log.txt
   ${CONTAINER_CMD} rmi ${TAG}
-  ${CONTAINER_CMD} build \
+  ${CONTAINER_CMD} build ${BUILD_FLAGS} \
     --no-cache \
     --file      octave-${BUILD_VER}.docker \
     --build-arg OCTAVE_VERSION=${VER} \
@@ -110,9 +112,9 @@ TAG="docker.io/gnuoctave/octave:${VER}"
 echo "--------------------------------------------------"
 echo "-  Build ${TAG}"
 echo "--------------------------------------------------"
-LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_oct-${VER}.log.txt
+LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_jupyter-oct-${VER}.log.txt
 ${CONTAINER_CMD} rmi ${TAG}
-${CONTAINER_CMD} build \
+${CONTAINER_CMD} build ${BUILD_FLAGS} \
   --no-cache \
   --file Dockerfile \
   --tag  ${TAG} \
