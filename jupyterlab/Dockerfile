@@ -5,7 +5,7 @@
 
 # Provides GNU Octave <https://www.octave.org> based on Ubuntu 18.04.
 
-FROM  gnuoctave/octave:6.1.0 AS build
+FROM  gnuoctave/octave:6.2.0 AS build
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2021-02-01

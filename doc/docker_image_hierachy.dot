@@ -1,11 +1,22 @@
 digraph hierarchy {
   rankdir="LR";
-  node [shape=box style=filled fillcolor=yellow fontname="helvetica"];
-  b4 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>4</FONT></B>>];
-  b5 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>5</FONT></B>>];
-  b6 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>6</FONT></B>>];
+  node [shape=box style=filled fontname="helvetica"];
+  node [fillcolor=chocolate1];
+  { rank = same;
+    ubuntu1604 [label=<ubuntu:<B><FONT color='blue'>16.04</FONT></B>>];
+    ubuntu1804 [label=<ubuntu:<B><FONT color='blue'>18.04</FONT></B>>];
+  }
+  node [fillcolor=yellow];
+  { rank = same;
+    b4 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>4</FONT></B>>];
+    b5 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>5</FONT></B>>];
+    b6 [label=<docker.io/gnuoctave/octave-build:<B><FONT color='blue'>6</FONT></B>>];
+  }
   node [fillcolor=palegreen1];
   jupyterlab [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>jupyterlab</FONT></B>>];
+  { rank = same;
+  v620 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>6.2.0</FONT></B>>];
+  node [fillcolor=aquamarine];
   v610 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>6.1.0</FONT></B>>];
   node [fillcolor=khaki1];
   v520 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>5.2.0</FONT></B>>];
@@ -22,16 +33,22 @@ digraph hierarchy {
   v402 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>4.0.2</FONT></B>>];
   v401 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>4.0.1</FONT></B>>];
   v400 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>4.0.0</FONT></B>>];
-  b4 -> v422
-  b4 -> v421
-  b4 -> v420
-  b4 -> v403
-  b4 -> v402
-  b4 -> v401
-  b4 -> v400
-  b5 -> v520
-  b5 -> v510
-  b5 -> v441
-  b5 -> v440
-  b6 -> v610 -> jupyterlab
+  }
+  ubuntu1804 -> b6 -> v620  -> jupyterlab
+                b6 -> v610
+  ubuntu1804 -> b5 -> v520
+                b5 -> v510
+                b5 -> v441
+                b5 -> v440
+  ubuntu1604 -> b4 -> v422
+                b4 -> v421
+                b4 -> v420
+                b4 -> v403
+                b4 -> v402
+                b4 -> v401
+                b4 -> v400
+  // ensure order
+  b6 -> b5 -> b4 [style=invis]
+  v620 -> v610 -> v520 -> v510 -> v441 -> v440 -> v422 -> v421 -> v420
+       -> v403 -> v402 -> v401 -> v400 [style=invis]
 }
