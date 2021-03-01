@@ -85,7 +85,7 @@ RUN apt-get --yes update  && \
 
 # Install OpenBLAS
 
-RUN OPENBLAS_VERSION=0.3.12 && \
+RUN OPENBLAS_VERSION=0.3.13 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
@@ -131,7 +131,7 @@ RUN SUITE_SPARSE_VERSION=5.8.1  && \
 
 # Install ARPACK NG
 
-RUN ARPACK_NG_VERSION=3.7.0 && \
+RUN ARPACK_NG_VERSION=3.8.0 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/opencollab/arpack-ng/archive/${ARPACK_NG_VERSION}.tar.gz" && \
@@ -182,7 +182,7 @@ RUN QRUPDATE_VERSION=1.1.2 && \
 
 # Install GLPK
 
-RUN GLPK_VERSION=4.65    && \
+RUN GLPK_VERSION=5.0     && \
     mkdir -p /tmp/build  && \
     cd       /tmp/build  && \
     wget -q "https://ftp.gnu.org/gnu/glpk/glpk-${GLPK_VERSION}.tar.gz"  && \
@@ -199,6 +199,8 @@ RUN GLPK_VERSION=4.65    && \
 
 
 # Install Sundials
+# FIXME: Version 5.4.0 is the last one supporting the native Ubuntu 18.04
+#        cmake version =(
 
 RUN SUNDIALS_VERSION=5.4.0  && \
     mkdir -p /tmp/build     && \
