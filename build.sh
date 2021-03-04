@@ -106,22 +106,26 @@ do
 done
 
 ## Build Octave JupyterLab image.
-cd jupyterlab
-VER="jupyterlab"
-TAG="docker.io/gnuoctave/octave:${VER}"
-echo "--------------------------------------------------"
-echo "-  Build ${TAG}"
-echo "--------------------------------------------------"
-LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_jupyter-oct-${VER}.log.txt
-${CONTAINER_CMD} rmi ${TAG}
-${CONTAINER_CMD} build ${BUILD_FLAGS} \
-  --no-cache \
-  --file Dockerfile \
-  --tag  ${TAG} \
-  . 2>&1 | tee ${LOG_FILE}
-publish_log    ${LOG_FILE}
-publish_image  ${TAG}
-cd ..
+## Currently not needed, DockerHub can build them :-)
+if false
+then
+  cd jupyterlab
+  VER="jupyterlab"
+  TAG="docker.io/gnuoctave/octave:${VER}"
+  echo "--------------------------------------------------"
+  echo "-  Build ${TAG}"
+  echo "--------------------------------------------------"
+  LOG_FILE=${LOG_DIR}/$(date +%F_%H-%M)_jupyter-oct-${VER}.log.txt
+  ${CONTAINER_CMD} rmi ${TAG}
+  ${CONTAINER_CMD} build ${BUILD_FLAGS} \
+    --no-cache \
+    --file Dockerfile \
+    --tag  ${TAG} \
+    . 2>&1 | tee ${LOG_FILE}
+  publish_log    ${LOG_FILE}
+  publish_image  ${TAG}
+  cd ..
+fi
 
 ## Save disk space and prune unused images.
 ## Octave builds really require lots of disk space!
