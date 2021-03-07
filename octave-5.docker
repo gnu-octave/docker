@@ -46,8 +46,7 @@ RUN apt-get --yes remove \
       qtbase5-dev \
       qttools5-dev \
       qttools5-dev-tools \
-      texlive \
-      texlive-generic-recommended && \
+      texlive-latex-extra && \
     apt-get --yes install \
       fonts-ipafont-gothic \
       fonts-noto-color-emoji \

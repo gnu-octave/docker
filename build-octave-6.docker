@@ -3,9 +3,9 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Ubuntu 18.04 image to build GNU Octave <https://www.octave.org>.
+# Ubuntu 20.04 image to build GNU Octave <https://www.octave.org>.
 
-FROM  ubuntu:18.04
+FROM  ubuntu:20.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2021-03-01
@@ -23,6 +23,7 @@ RUN apt-get --yes update  && \
       cmake \
       dbus \
       epstool \
+      fig2dev \
       flex \
       g++ \
       gcc \
@@ -42,9 +43,9 @@ RUN apt-get --yes update  && \
       libgl1-mesa-dev \
       libgl2ps-dev \
       libgmp-dev \
-      libgpgme11-dev \
+      libgpgme-dev \
       libgraphicsmagick++1-dev \
-      libhdf5-serial-dev \
+      libhdf5-dev \
       liblapack-dev \
       libmpfr-dev \
       libosmesa6-dev \
@@ -72,9 +73,7 @@ RUN apt-get --yes update  && \
       qttools5-dev-tools \
       tar \
       texinfo \
-      texlive \
-      texlive-generic-recommended \
-      transfig \
+      texlive-latex-extra \
       unzip \
       wget \
       zlib1g-dev \
@@ -199,10 +198,8 @@ RUN GLPK_VERSION=5.0     && \
 
 
 # Install Sundials
-# FIXME: Version 5.4.0 is the last one supporting the native Ubuntu 18.04
-#        cmake version =(
 
-RUN SUNDIALS_VERSION=5.4.0  && \
+RUN SUNDIALS_VERSION=5.7.0  && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://computation.llnl.gov/projects/sundials/download/sundials-${SUNDIALS_VERSION}.tar.gz" && \

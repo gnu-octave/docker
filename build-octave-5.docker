@@ -23,6 +23,7 @@ RUN apt-get --yes update  && \
       cmake \
       dbus \
       epstool \
+      fig2dev \
       flex \
       g++ \
       gcc \
@@ -42,9 +43,9 @@ RUN apt-get --yes update  && \
       libgl1-mesa-dev \
       libgl2ps-dev \
       libgmp-dev \
-      libgpgme11-dev \
+      libgpgme-dev \
       libgraphicsmagick++1-dev \
-      libhdf5-serial-dev \
+      libhdf5-dev \
       liblapack-dev \
       libmpfr-dev \
       libosmesa6-dev \
@@ -72,9 +73,7 @@ RUN apt-get --yes update  && \
       qttools5-dev-tools \
       tar \
       texinfo \
-      texlive \
-      texlive-generic-recommended \
-      transfig \
+      texlive-latex-extra \
       unzip \
       wget \
       zlib1g-dev \
