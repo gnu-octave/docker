@@ -5,6 +5,7 @@ digraph hierarchy {
   { rank = same;
     ubuntu1604 [label=<ubuntu:<B><FONT color='blue'>16.04</FONT></B>>];
     ubuntu1804 [label=<ubuntu:<B><FONT color='blue'>18.04</FONT></B>>];
+    ubuntu2004 [label=<ubuntu:<B><FONT color='blue'>20.04</FONT></B>>];
   }
   node [fillcolor=yellow];
   { rank = same;
@@ -34,7 +35,7 @@ digraph hierarchy {
   v401 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>4.0.1</FONT></B>>];
   v400 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>4.0.0</FONT></B>>];
   }
-  ubuntu1804 -> b6 -> v620  -> jupyterlab
+  ubuntu2004 -> b6 -> v620  -> jupyterlab
                 b6 -> v610
   ubuntu1804 -> b5 -> v520
                 b5 -> v510
