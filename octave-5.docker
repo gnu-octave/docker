@@ -47,6 +47,7 @@ RUN apt-get --yes remove \
       qttools5-dev \
       qttools5-dev-tools \
       texlive-latex-extra && \
+    DEBIAN_FRONTEND="noninteractive" \
     apt-get --yes install \
       fonts-ipafont-gothic \
       fonts-noto-color-emoji \

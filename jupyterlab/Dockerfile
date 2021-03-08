@@ -14,6 +14,7 @@ ENV LAST_UPDATED=2021-03-01
 
 RUN chmod 777 /tmp        && \
     apt-get --yes update  && \
+    DEBIAN_FRONTEND="noninteractive" \
     apt-get --yes install    \
       locales                \
       python3-pip            \

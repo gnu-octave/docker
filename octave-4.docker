@@ -48,6 +48,7 @@ RUN apt-get --yes remove \
       libqt4-opengl-dev \
       texlive \
       texlive-generic-recommended && \
+    DEBIAN_FRONTEND="noninteractive" \
     apt-get --yes install \
       info \
       libcurl3-gnutls \
