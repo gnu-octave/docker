@@ -61,8 +61,8 @@ RUN apt-get --yes remove \
       libqt5printsupport5 \
       libqt5widgets5 \
       libqt5xml5 \
-      libqscintilla2-qt5-13 \
-      libreadline7 \
+      libqscintilla2-qt5-15 \
+      libreadline8 \
       libsndfile1 \
       python3-pip                && \
     # Install required python packages
