@@ -15,7 +15,7 @@ ENV LAST_UPDATED=2021-03-01
 RUN apt-get --yes update  && \
     apt-get --yes upgrade && \
     DEBIAN_FRONTEND="noninteractive" \
-    apt-get --yes install \
+    apt-get --no-install-recommends --yes install \
       autoconf \
       automake \
       bison \

@@ -49,7 +49,7 @@ RUN apt-get --yes remove \
       texlive \
       texlive-generic-recommended && \
     DEBIAN_FRONTEND="noninteractive" \
-    apt-get --yes install \
+    apt-get --no-install-recommends --yes install \
       info \
       libcurl3-gnutls \
       libgnutls28-dev \
