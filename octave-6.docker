@@ -3,7 +3,7 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Provides GNU Octave <https://www.octave.org> based on Ubuntu 18.04.
+# Provides GNU Octave <https://www.octave.org> based on Ubuntu 20.04.
 
 FROM  gnuoctave/octave-build:6 AS build
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"

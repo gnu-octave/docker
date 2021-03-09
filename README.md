@@ -1,6 +1,6 @@
-# "Docker" images of GNU Octave
+# Docker images of GNU Octave
 
-> https://hub.docker.com/repository/docker/gnuoctave/octave
+> https://hub.docker.com/r/gnuoctave/octave
 
 The Octave images can be run by
 - [Docker](https://www.docker.com/):
