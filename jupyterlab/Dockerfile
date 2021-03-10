@@ -30,8 +30,6 @@ RUN chmod 777 /tmp        && \
       numpy                         \
       sympy==1.5.1                  \
       matplotlib                 && \
-    apt-get --yes remove            \
-      python3-pip                && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
     rm -Rf /var/lib/apt/lists/*  && \
