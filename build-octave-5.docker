@@ -85,7 +85,7 @@ RUN apt-get --yes update  && \
 
 # Install OpenBLAS
 
-RUN OPENBLAS_VERSION=0.3.13 && \
+RUN OPENBLAS_VERSION=0.3.14 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
