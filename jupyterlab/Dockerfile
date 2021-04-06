@@ -41,7 +41,7 @@ RUN chmod 777 /tmp        && \
 ## (2021-02-10)
 
 ARG NB_USER="jovyan"
-ARG NB_UID="1000"
+ARG NB_UID="1111"
 ARG NB_GID="100"
 
 # Fix DL4006
