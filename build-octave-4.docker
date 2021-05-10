@@ -3,12 +3,14 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Ubuntu 16.04 image to build GNU Octave <https://www.octave.org>.
+# Docker images to build GNU Octave <https://www.octave.org>.
+
 
 FROM  ubuntu:16.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2021-05-01
+
 
 # Install security updates and required packages.
 
@@ -31,6 +33,7 @@ RUN apt-get --yes update  && \
       gperf \
       gzip \
       icoutils \
+      info \
       less \
       libarpack2-dev \
       libblas-dev \
@@ -42,9 +45,11 @@ RUN apt-get --yes update  && \
       libgl1-mesa-dev \
       libgl2ps-dev \
       libglpk-dev \
+      libgnutls28-dev \
       libgraphicsmagick++1-dev \
       libhdf5-serial-dev \
       liblapack-dev \
+      libmpfr-dev \
       libopenblas-dev \
       libosmesa6-dev \
       libpcre3-dev \
@@ -75,7 +80,6 @@ RUN apt-get --yes update  && \
       qtbase5-dev \
       qttools5-dev \
       qttools5-dev-tools \
-      rsync \
       tar \
       texinfo \
       texlive \

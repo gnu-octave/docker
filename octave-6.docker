@@ -3,7 +3,7 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Provides GNU Octave <https://www.octave.org> based on Ubuntu 20.04.
+# Docker images to build GNU Octave <https://www.octave.org>.
 
 
 FROM  gnuoctave/octave-build:6
@@ -14,13 +14,12 @@ ENV LAST_UPDATED=2021-05-01
 
 # Install Octave
 
-# ${OCTAVE_VERSION} specified by `DOCKER_TAG`, set in `hooks/build`.
+# `OCTAVE_VERSION` specified by `DOCKER_TAG`, set in `hooks/build`.
 # https://docs.docker.com/docker-hub/builds/advanced/#environment-variables-for-building-and-testing
 
 ARG OCTAVE_VERSION
 
-RUN env && echo "DOCKER_TAG=${DOCKER_TAG}" && echo "OCTAVE_VERSION=${OCTAVE_VERSION}" && \
-    mkdir -p /tmp/build   && \
+RUN mkdir -p /tmp/build   && \
     cd       /tmp/build   && \
     wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
     tar -xf octave-${OCTAVE_VERSION}.tar.gz  && \

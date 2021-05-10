@@ -3,12 +3,14 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Ubuntu 18.04 image to build GNU Octave <https://www.octave.org>.
+# Docker images to build GNU Octave <https://www.octave.org>.
+
 
 FROM  ubuntu:18.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2021-05-01
+
 
 # Install security updates and required packages.
 
@@ -26,6 +28,8 @@ RUN apt-get --yes update  && \
       epstool \
       fig2dev \
       flex \
+      fonts-ipafont-gothic \
+      fonts-noto-color-emoji \
       g++ \
       gcc \
       gfortran \
@@ -34,8 +38,8 @@ RUN apt-get --yes update  && \
       gperf \
       gzip \
       icoutils \
+      info \
       less \
-      libblas-dev \
       libcurl4-gnutls-dev \
       libfftw3-dev \
       libfltk1.3-dev \
@@ -44,10 +48,10 @@ RUN apt-get --yes update  && \
       libgl1-mesa-dev \
       libgl2ps-dev \
       libgmp-dev \
+      libgnutls28-dev \
       libgpgme-dev \
       libgraphicsmagick++1-dev \
       libhdf5-dev \
-      liblapack-dev \
       libmpfr-dev \
       libosmesa6-dev \
       libpcre3-dev \
@@ -57,8 +61,8 @@ RUN apt-get --yes update  && \
       libreadline-dev \
       librsvg2-bin \
       libseccomp-dev \
-      libssl-dev \
       libsndfile1-dev \
+      libssl-dev \
       libtool \
       libxft-dev \
       lpr \
@@ -69,6 +73,7 @@ RUN apt-get --yes update  && \
       pkg-config \
       portaudio19-dev \
       pstoedit \
+      python3-pip \
       qtbase5-dev \
       qttools5-dev \
       qttools5-dev-tools \
@@ -79,6 +84,10 @@ RUN apt-get --yes update  && \
       wget \
       zlib1g-dev \
       zip                        && \
+    # Install required python packages
+    #   - sympy, see https://savannah.gnu.org/bugs/?58491
+    pip3 install --upgrade --no-cache-dir \
+      sympy==1.5.1               && \
     apt-get --yes clean          && \
     apt-get --yes autoremove
 
