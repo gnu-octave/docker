@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# https://forums.docker.com/t/passing-variables-to-an-automated-build-docker-tag/71875
+env
+
 docker build \
   --build-arg OCTAVE_VERSION=$DOCKER_TAG \
+  --build-arg DOCKER_TAG=$DOCKER_TAG \
   --file $DOCKERFILE_PATH \
   --tag $IMAGE_NAME \
   .
