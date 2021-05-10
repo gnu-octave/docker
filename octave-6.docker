@@ -14,11 +14,10 @@ ENV LAST_UPDATED=2021-05-01
 
 # Install Octave
 
-# Specified by `DOCKER_TAG`.
+# ${OCTAVE_VERSION} specified by `DOCKER_TAG`, set in `hooks/build`.
 # https://docs.docker.com/docker-hub/builds/advanced/#environment-variables-for-building-and-testing
-ARG OCTAVE_VERSION
 
-RUN env && echo $DOCKER_TAG && \
+RUN env && echo "DOCKER_TAG=${DOCKER_TAG}" && echo "OCTAVE_VERSION=${OCTAVE_VERSION}" && \
     mkdir -p /tmp/build   && \
     cd       /tmp/build   && \
     wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
