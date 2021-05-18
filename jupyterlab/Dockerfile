@@ -3,9 +3,9 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-# Provides GNU Octave <https://www.octave.org> based on Ubuntu 18.04.
+## Synchonized with https://github.com/jupyter/docker-stacks/tree/master/base-notebook
 
-FROM  gnuoctave/octave:6.2.0 AS build
+FROM  gnuoctave/octave:6.2.0
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2021-05-01
@@ -15,9 +15,8 @@ ENV LAST_UPDATED=2021-05-01
 RUN chmod 777 /tmp        && \
     apt-get --yes update  && \
     DEBIAN_FRONTEND="noninteractive" \
-    apt-get --no-install-recommends --yes install    \
+    apt-get --no-install-recommends --yes install \
       locales                \
-      python3-pip            \
       sudo                && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
@@ -33,12 +32,8 @@ RUN chmod 777 /tmp        && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
     rm -Rf /var/lib/apt/lists/*  && \
-    rm -Rf /usr/share/doc        && \
     jupyter notebook --generate-config && \
     jupyter lab clean
-
-## From https://github.com/jupyter/docker-stacks/tree/master/base-notebook
-## (2021-02-10)
 
 ARG NB_USER="jovyan"
 ARG NB_UID="1111"
@@ -83,7 +78,7 @@ USER $NB_UID
 EXPOSE 8888
 
 # Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
+ENTRYPOINT ["/tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
 # Copy local files as late as possible to avoid cache busting
@@ -96,9 +91,8 @@ USER root
 
 # Prepare upgrade to JupyterLab V3.0 #1205
 RUN sed -re "s/c.NotebookApp/c.ServerApp/g" \
-    /etc/jupyter/jupyter_notebook_config.py > /etc/jupyter/jupyter_server_config.py
-
-RUN fix-permissions /etc/jupyter/
+    /etc/jupyter/jupyter_notebook_config.py > /etc/jupyter/jupyter_server_config.py && \
+    fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
