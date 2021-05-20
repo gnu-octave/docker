@@ -28,8 +28,9 @@ RUN apt-get --yes update  && \
       epstool \
       fig2dev \
       flex \
-      fonts-ipafont-gothic \
+      fonts-noto-cjk \
       fonts-noto-color-emoji \
+      fonts-noto-mono \
       g++ \
       gcc \
       gfortran \
@@ -89,7 +90,8 @@ RUN apt-get --yes update  && \
     pip3 install --upgrade --no-cache-dir \
       sympy==1.5.1               && \
     apt-get --yes clean          && \
-    apt-get --yes autoremove
+    apt-get --yes autoremove     && \
+    rm -Rf /var/lib/apt/lists/*
 
 
 # Install OpenBLAS

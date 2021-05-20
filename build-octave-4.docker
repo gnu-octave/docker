@@ -90,4 +90,5 @@ RUN apt-get --yes update  && \
       zlib1g-dev \
       zip                        && \
     apt-get --yes clean          && \
-    apt-get --yes autoremove
+    apt-get --yes autoremove     && \
+    rm -Rf /var/lib/apt/lists/*
