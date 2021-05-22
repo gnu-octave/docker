@@ -79,6 +79,7 @@ RUN apt-get --yes update  && \
       qtbase5-dev \
       qttools5-dev \
       qttools5-dev-tools \
+      ssh-askpass \
       tar \
       texinfo \
       texlive-latex-extra \
