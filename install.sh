@@ -4,12 +4,15 @@
 ## Configuration
 ################
 
-# Default image to be used.
-OCTAVE_IMAGE="docker.io/gnuoctave/octave:jupyterlab"
+# Default Octave Docker image to be used.
+OCTAVE_VERSION="6.2.0"
+OCTAVE_IMAGE="docker.io/gnuoctave/octave"
 
 # Choose default container tool in this order.
 CONTAINER_TOOL_HIERARCHY="singularity, docker, podman"
 
+# Octave Docker image  tag for JupyterLab
+OCTAVE_JUPYTERLAB="jupyterlab"
 
 #############
 ## Path setup
@@ -121,32 +124,26 @@ else
 fi
 DEBUG_MSG "use '$CONTAINER_TOOL' as container tool."
 
-# Common variables for container tools.
-CONTAINER_PULL_CMD="pull $QUIET_FLAG $OCTAVE_IMAGE"
-CONTAINER_RUN_CMD="run \
-  --rm \
-  --network=host \
-  --env=\"DISPLAY\" \
-  --volume=\"\$HOME/:\$HOME:rw\" \
-  $OCTAVE_IMAGE"
-
 # Setup for the container tool.
 case $CONTAINER_TOOL in
-  "docker")
-    PULL_CMD=$CONTAINER_PULL_CMD
-    RUN_CMD=$CONTAINER_RUN_CMD
-    JUPYTER_RUN_CMD=$CONTAINER_RUN_CMD
-    ;;
-  "podman")
-    PULL_CMD=$CONTAINER_PULL_CMD
-    RUN_CMD=$CONTAINER_RUN_CMD
-    JUPYTER_RUN_CMD=$CONTAINER_RUN_CMD
+  "docker" | "podman")
+    PULL_CMD="$CONTAINER_TOOL pull $QUIET_FLAG $OCTAVE_IMAGE"
+    PULL_CMD="$PULL_CMD:$OCTAVE_VERSION; \
+              $PULL_CMD:$OCTAVE_JUPYTERLAB"
+    R_CMD="--rm \\
+           --network=host \\
+           --env=\"DISPLAY\" \\
+           --volume=\"\$HOME:/root:rw\" \\
+           $OCTAVE_IMAGE"
+    RUN_CMD="$CONTAINER_TOOL run -it $R_CMD:$OCTAVE_VERSION"
+    JUPYTER_RUN_CMD="$CONTAINER_TOOL run $R_CMD:$OCTAVE_JUPYTERLAB"
     ;;
   "singularity")
     SIF_FILE="$BIN_DIR/octave_jupyterlab.sif"
-    PULL_CMD="pull --disable-cache $SIF_FILE ${OCTAVE_IMAGE/docker.io/docker:/}"
-    RUN_CMD="exec --bind /run/user $SIF_FILE"
-    JUPYTER_RUN_CMD="run --bind /run/user $SIF_FILE"
+    PULL_CMD="$CONTAINER_TOOL pull --disable-cache $SIF_FILE \
+              ${OCTAVE_IMAGE/docker.io/docker:/}:$OCTAVE_JUPYTERLAB"
+    RUN_CMD="$CONTAINER_TOOL exec --bind /run/user $SIF_FILE"
+    JUPYTER_RUN_CMD="$CONTAINER_TOOL run --bind /run/user $SIF_FILE"
     ;;
   *)
     echo -e "\nError: invalid container tool '$CONTAINER_TOOL'."
@@ -242,13 +239,13 @@ fi
 # Get images
 
 echo -e "\nPull '$OCTAVE_IMAGE' image with '$CONTAINER_TOOL'...\n"
-$CONTAINER_TOOL $PULL_CMD
+$PULL_CMD
 
 
 # Install binary files.
 
 echo "#!/bin/sh
-$CONTAINER_TOOL $RUN_CMD \"\${0##*/}\" \"\$@\"" > $BIN_DIR/octave
+$RUN_CMD \"\${0##*/}\" \"\$@\"" > $BIN_DIR/octave
 chmod +x $BIN_DIR/octave
 ln -sf $BIN_DIR/octave $BIN_DIR/mkoctfile
 ln -sf $BIN_DIR/octave $BIN_DIR/octave-config
@@ -262,7 +259,9 @@ function get_JupyterLab_start_script()
 LOG_FILE=\$(mktemp)
 MAX_RETRIES=30
 
-$CONTAINER_TOOL $JUPYTER_RUN_CMD > \$LOG_FILE 2>&1 &
+echo \"Log file is: '\$LOG_FILE'.\"
+
+$JUPYTER_RUN_CMD > \$LOG_FILE 2>&1 &
 
 for i in \$(seq 1 \$MAX_RETRIES)
 do
@@ -282,7 +281,7 @@ do
   sleep 1
 done
 
-echo \"JupyterLab Octave server seems not to be started.\" \
+echo \"JupyterLab Octave server seems not to be started.\" \\
      \"Please read the server log file '\$LOG_FILE'.\"
 exit 1
 "
