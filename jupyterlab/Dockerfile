@@ -17,7 +17,8 @@ RUN chmod 777 /tmp        && \
     DEBIAN_FRONTEND="noninteractive" \
     apt-get --no-install-recommends --yes install \
       locales                \
-      sudo                && \
+      sudo                   \
+      tini                && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
     pip3 install --upgrade --no-cache-dir \
@@ -36,7 +37,7 @@ RUN chmod 777 /tmp        && \
     jupyter lab clean
 
 ARG NB_USER="jovyan"
-ARG NB_UID="1111"
+ARG NB_UID="1000"
 ARG NB_GID="100"
 
 # Fix DL4006
@@ -62,9 +63,6 @@ ENV SHELL=/bin/bash \
     OCTAVE_EXECUTABLE=octave-cli-jupyter \
     JUPYTER_ENABLE_LAB=yes
 
-ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /tini
-RUN chmod +x /tini
-
 # Copy a script that we will use to correct permissions after running certain commands
 COPY fix-permissions /usr/local/bin/fix-permissions
 RUN chmod a+rx /usr/local/bin/fix-permissions
@@ -83,7 +81,7 @@ USER $NB_UID
 EXPOSE 8888
 
 # Configure container startup
-ENTRYPOINT ["/tini", "-g", "--"]
+ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
 # Copy local files as late as possible to avoid cache busting
@@ -100,6 +98,6 @@ RUN sed -re "s/c.NotebookApp/c.ServerApp/g" \
     fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER $NB_UID
+#USER $NB_UID  # Modification: set user at runtime
 
 WORKDIR $HOME
