@@ -130,12 +130,18 @@ case $CONTAINER_TOOL in
     PULL_CMD="$CONTAINER_TOOL pull $QUIET_FLAG $OCTAVE_IMAGE"
     PULL_CMD="$PULL_CMD:$OCTAVE_VERSION; \
               $PULL_CMD:$OCTAVE_JUPYTERLAB"
+    # See https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
     R_CMD="--rm \\
            --network=host \\
            --env=\"DISPLAY\" \\
-           --volume=\"\$HOME:/root:rw\" \\
+           --env=\"NB_USER=\$USER\" \\
+           --env=\"NB_UID=\$(id -u)\" \\
+           --env=\"NB_GID=\$(id -g)\" \\
+           --env=\"GRANT_SUDO=yes\" \\
+           --user root \\
+           --volume=\"\$HOME:\$HOME:rw\" \\
            $OCTAVE_IMAGE"
-    RUN_CMD="$CONTAINER_TOOL run -it $R_CMD:$OCTAVE_VERSION"
+    RUN_CMD="$CONTAINER_TOOL run -it $R_CMD:$OCTAVE_VERSION start.sh"
     JUPYTER_RUN_CMD="$CONTAINER_TOOL run $R_CMD:$OCTAVE_JUPYTERLAB"
     ;;
   "singularity")
