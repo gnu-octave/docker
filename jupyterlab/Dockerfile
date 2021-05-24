@@ -3,7 +3,7 @@
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
-## Synchonized with https://github.com/jupyter/docker-stacks/tree/master/base-notebook
+## Synchronized with https://github.com/jupyter/docker-stacks/tree/master/base-notebook
 
 FROM  gnuoctave/octave:6.2.0
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
@@ -37,7 +37,7 @@ RUN chmod 777 /tmp        && \
     jupyter lab clean
 
 ARG NB_USER="jovyan"
-ARG NB_UID="1000"
+ARG NB_UID="1111"
 ARG NB_GID="100"
 
 # Fix DL4006
@@ -67,7 +67,7 @@ ENV SHELL=/bin/bash \
 COPY fix-permissions /usr/local/bin/fix-permissions
 RUN chmod a+rx /usr/local/bin/fix-permissions
 
-# Create NB_USER with name jovyan user with UID=1000 and in the 'users' group
+# Create NB_USER with name jovyan user with UID=$NB_UID and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
@@ -98,6 +98,6 @@ RUN sed -re "s/c.NotebookApp/c.ServerApp/g" \
     fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
-#USER $NB_UID  # Modification: set user at runtime
+USER $NB_UID
 
 WORKDIR $HOME

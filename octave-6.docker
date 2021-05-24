@@ -37,4 +37,7 @@ RUN mkdir -p /tmp/build   && \
 
 ENV LC_ALL=C
 
-CMD ["octave-cli"]
+# Helper script to start container with current user.
+COPY jupyterlab/start.sh /usr/local/bin/
+
+CMD ["start.sh" "octave-cli"]
