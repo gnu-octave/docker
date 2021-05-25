@@ -16,8 +16,6 @@ RUN chmod 777 /tmp        && \
     apt-get --yes update  && \
     DEBIAN_FRONTEND="noninteractive" \
     apt-get --no-install-recommends --yes install \
-      locales                \
-      sudo                   \
       tini                && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
@@ -47,9 +45,7 @@ USER root
 
 # FIXME: Hack around Octave executable enforcement (hopefully one day removed):
 # https://github.com/Calysto/octave_kernel/blob/a613c29f40e22b1751164bca30df381799539f06/octave_kernel/kernel.py#L446-L461
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    locale-gen                                 && \
-    ln -s /usr/bin/octave /usr/bin/octave-cli-jupyter
+RUN ln -s /usr/bin/octave /usr/bin/octave-cli-jupyter
 
 # Configure environment
 ENV SHELL=/bin/bash \
@@ -62,19 +58,6 @@ ENV SHELL=/bin/bash \
     HOME=/home/$NB_USER \
     OCTAVE_EXECUTABLE=octave-cli-jupyter \
     JUPYTER_ENABLE_LAB=yes
-
-# Copy a script that we will use to correct permissions after running certain commands
-COPY fix-permissions /usr/local/bin/fix-permissions
-RUN chmod a+rx /usr/local/bin/fix-permissions
-
-# Create NB_USER with name jovyan user with UID=$NB_UID and in the 'users' group
-# and make sure these dirs are writable by the `users` group.
-RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
-    sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
-    sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
-    useradd -l -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-    chmod g+w /etc/passwd && \
-    fix-permissions $HOME
 
 USER $NB_UID
 

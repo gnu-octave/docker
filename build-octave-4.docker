@@ -69,6 +69,7 @@ RUN apt-get --yes update  && \
       libtool \
       libxft-dev \
       llvm-dev \
+      locales \
       lpr \
       make \
       mercurial \
@@ -80,6 +81,7 @@ RUN apt-get --yes update  && \
       qtbase5-dev \
       qttools5-dev \
       qttools5-dev-tools \
+      sudo \
       tar \
       texinfo \
       texlive \

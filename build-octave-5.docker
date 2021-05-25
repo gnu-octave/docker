@@ -66,6 +66,7 @@ RUN apt-get --yes update  && \
       libssl-dev \
       libtool \
       libxft-dev \
+      locales \
       lpr \
       make \
       mercurial \
@@ -80,6 +81,7 @@ RUN apt-get --yes update  && \
       qttools5-dev \
       qttools5-dev-tools \
       ssh-askpass \
+      sudo \
       tar \
       texinfo \
       texlive-latex-extra \
