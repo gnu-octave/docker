@@ -131,9 +131,11 @@ case $CONTAINER_TOOL in
     PULL_CMD="$PULL_CMD:$OCTAVE_VERSION; \
               $PULL_CMD:$OCTAVE_JUPYTERLAB"
     # See https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
-    R_CMD="--rm \\
+    R_CMD="$CONTAINER_TOOL run \$DOCKER_INTERACTIVE \\
+           --rm \\
            --network=host \\
            --env=\"DISPLAY\" \\
+           --env=\"XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR\" \\
            --env=\"NB_USER=\$USER\" \\
            --env=\"NB_UID=\$(id -u)\" \\
            --env=\"NB_GID=\$(id -g)\" \\
@@ -141,9 +143,10 @@ case $CONTAINER_TOOL in
            --user root \\
            --volume=\"\$HOME:\$HOME:rw\" \\
            --volume=\"/dev:/dev:rw\" \\
+           --volume=\"/run/user:/run/user:rw\" \\
            $OCTAVE_IMAGE"
-    RUN_CMD="$CONTAINER_TOOL run -it $R_CMD:$OCTAVE_VERSION start.sh"
-    JUPYTER_RUN_CMD="$CONTAINER_TOOL run $R_CMD:$OCTAVE_JUPYTERLAB"
+    RUN_CMD="$R_CMD:$OCTAVE_VERSION start.sh"
+    JUPYTER_RUN_CMD="$R_CMD:$OCTAVE_JUPYTERLAB"
     ;;
   "singularity")
     SIF_FILE="$BIN_DIR/octave_jupyterlab.sif"
@@ -249,15 +252,24 @@ echo -e "\nPull '$OCTAVE_IMAGE' image with '$CONTAINER_TOOL'...\n"
 $PULL_CMD
 
 
-# Install binary files.
+# Install start scripts.
 
-echo "#!/bin/sh
-$RUN_CMD \"\${0##*/}\" \"\$@\"" > $BIN_DIR/octave
-chmod +x $BIN_DIR/octave
-ln -sf $BIN_DIR/octave $BIN_DIR/mkoctfile
-ln -sf $BIN_DIR/octave $BIN_DIR/octave-config
-ln -sf $BIN_DIR/octave $BIN_DIR/octave-cli
+function get_Octave_start_script()
+{
+  echo "#!/bin/sh
 
+DOCKER_INTERACTIVE=\"-it\"
+for arg in \"\$@\"
+do
+  if [[ \"\$arg\" == \"--gui\" ]]
+  then
+    DOCKER_INTERACTIVE=\"\"
+  fi
+done
+
+$RUN_CMD \"\${0##*/}\" \"\$@\"
+"
+}
 
 function get_JupyterLab_start_script()
 {
@@ -265,6 +277,7 @@ function get_JupyterLab_start_script()
 
 LOG_FILE=\$(mktemp)
 MAX_RETRIES=30
+DOCKER_INTERACTIVE=\"\"
 
 echo \"Log file is: '\$LOG_FILE'.\"
 
@@ -303,6 +316,12 @@ echo \"JupyterLab Octave server seems not to be started.\" \\
 exit 1
 "
 }
+
+get_Octave_start_script > $BIN_DIR/octave
+chmod u+x $BIN_DIR/octave
+ln -sf $BIN_DIR/octave $BIN_DIR/mkoctfile
+ln -sf $BIN_DIR/octave $BIN_DIR/octave-config
+ln -sf $BIN_DIR/octave $BIN_DIR/octave-cli
 
 get_JupyterLab_start_script > $BIN_DIR/octave-jupyterlab
 chmod +x $BIN_DIR/octave-jupyterlab
