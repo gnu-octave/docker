@@ -12,6 +12,8 @@ ENV LAST_UPDATED=2021-05-01
 
 # Install JupyterLab
 
+USER root
+
 RUN chmod 777 /tmp        && \
     apt-get --yes update  && \
     DEBIAN_FRONTEND="noninteractive" \
@@ -40,8 +42,6 @@ ARG NB_GID="100"
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-USER root
 
 # FIXME: Hack around Octave executable enforcement (hopefully one day removed):
 # https://github.com/Calysto/octave_kernel/blob/a613c29f40e22b1751164bca30df381799539f06/octave_kernel/kernel.py#L446-L461
