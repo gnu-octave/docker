@@ -140,6 +140,7 @@ case $CONTAINER_TOOL in
            --env=\"GRANT_SUDO=yes\" \\
            --user root \\
            --volume=\"\$HOME:\$HOME:rw\" \\
+           --volume=\"/dev:/dev:rw\" \\
            $OCTAVE_IMAGE"
     RUN_CMD="$CONTAINER_TOOL run -it $R_CMD:$OCTAVE_VERSION start.sh"
     JUPYTER_RUN_CMD="$CONTAINER_TOOL run $R_CMD:$OCTAVE_JUPYTERLAB"
