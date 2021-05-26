@@ -145,7 +145,7 @@ case $CONTAINER_TOOL in
            --volume=\"/dev:/dev:rw\" \\
            --volume=\"/run/user:/run/user:rw\" \\
            $OCTAVE_IMAGE"
-    RUN_CMD="$R_CMD:$OCTAVE_VERSION start.sh"
+    RUN_CMD="$R_CMD:\$OCTAVE_VERSION start.sh"
     JUPYTER_RUN_CMD="$R_CMD:$OCTAVE_JUPYTERLAB"
     ;;
   "singularity")
@@ -257,6 +257,8 @@ $PULL_CMD
 function get_Octave_start_script()
 {
   echo "#!/bin/sh
+
+OCTAVE_VERSION=\"\${OCTAVE_VERSION:-\"$OCTAVE_VERSION\"}\"
 
 DOCKER_INTERACTIVE=\"-it\"
 for arg in \"\$@\"
