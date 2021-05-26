@@ -267,6 +267,11 @@ do
   then
     DOCKER_INTERACTIVE=\"\"
   fi
+  # Old Octave qt4 builds
+  if [[ \"\$arg\" == \"--force-gui\" ]]
+  then
+    DOCKER_INTERACTIVE=\"--env=QT_GRAPHICSSYSTEM=native\"
+  fi
 done
 
 $RUN_CMD \"\${0##*/}\" \"\$@\"
