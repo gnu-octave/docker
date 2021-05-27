@@ -28,6 +28,10 @@ BIN_DIR=$HOME/bin
 APP_DIR=$XDG_DATA_HOME/applications
 ICON_DIR=$XDG_DATA_HOME/icons/hicolor/128x128/apps
 
+# Ensure directories to exist.
+mkdir -p $BIN_DIR
+mkdir -p $APP_DIR
+mkdir -p $ICON_DIR
 
 function usage()
 {
