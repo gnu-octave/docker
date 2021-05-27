@@ -128,8 +128,8 @@ DEBUG_MSG "use '$CONTAINER_TOOL' as container tool."
 case $CONTAINER_TOOL in
   "docker" | "podman")
     PULL_CMD="$CONTAINER_TOOL pull $QUIET_FLAG $OCTAVE_IMAGE"
-    PULL_CMD="$PULL_CMD:$OCTAVE_VERSION; \
-              $PULL_CMD:$OCTAVE_JUPYTERLAB"
+    PULL_CMD="$PULL_CMD:$OCTAVE_VERSION"; \
+             "$PULL_CMD:$OCTAVE_JUPYTERLAB"
     # See https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
     R_CMD="$CONTAINER_TOOL run \$DOCKER_INTERACTIVE \\
            --rm \\
