@@ -22,6 +22,7 @@ RUN apt-get --yes update  && \
       automake \
       bison \
       build-essential \
+      curl \
       dbus \
       epstool \
       flex \

@@ -24,6 +24,7 @@ RUN apt-get --yes update  && \
       build-essential \
       clang \
       cmake \
+      curl \
       dbus \
       epstool \
       fig2dev \
