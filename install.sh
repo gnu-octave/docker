@@ -145,6 +145,7 @@ case $CONTAINER_TOOL in
            --env=\"GRANT_SUDO=yes\" \\
            --user root \\
            --volume=\"\$HOME:\$HOME:rw\" \\
+           --volume=\"\$OCTAVE_CONF_DIR_HOST:\$OCTAVE_CONF_DIR:rw\" \\
            --volume=\"/dev:/dev:rw\" \\
            --volume=\"/run/user:/run/user:rw\" \\
            $OCTAVE_IMAGE"
@@ -276,6 +277,12 @@ do
     DOCKER_INTERACTIVE=\"--env=QT_GRAPHICSSYSTEM=native\"
   fi
 done
+
+## Avoid collisions with different 'OCTAVE_VERSION's
+XDG_CONFIG_HOME=\"\${XDG_CONFIG_HOME:-\$HOME/.config}\"
+OCTAVE_CONF_DIR=\"\$XDG_CONFIG_HOME/octave\"
+OCTAVE_CONF_DIR_HOST=\"\$OCTAVE_CONF_DIR/\$OCTAVE_VERSION\"
+mkdir -p \"\$OCTAVE_CONF_DIR_HOST\"
 
 $RUN_CMD \"\${0##*/}\" \"\$@\"
 "
