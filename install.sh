@@ -156,8 +156,9 @@ case $CONTAINER_TOOL in
     SIF_FILE="$BIN_DIR/octave_jupyterlab.sif"
     PULL_CMD="$CONTAINER_TOOL pull --disable-cache $SIF_FILE \
               ${OCTAVE_IMAGE/docker.io/docker:/}:$OCTAVE_JUPYTERLAB"
-    RUN_CMD="$CONTAINER_TOOL exec --bind /run/user $SIF_FILE"
-    JUPYTER_RUN_CMD="$CONTAINER_TOOL run --bind /run/user $SIF_FILE"
+    R_CMD="--bind /run/user,\$OCTAVE_CONF_DIR_HOST:\$OCTAVE_CONF_DIR $SIF_FILE"
+    RUN_CMD="$CONTAINER_TOOL exec $R_CMD"
+    JUPYTER_RUN_CMD="$CONTAINER_TOOL run $R_CMD"
     ;;
   *)
     echo -e "\nError: invalid container tool '$CONTAINER_TOOL'."
