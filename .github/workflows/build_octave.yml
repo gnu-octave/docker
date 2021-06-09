@@ -1,4 +1,4 @@
-name: Docker Octave build images
+name: Docker Octave images
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -36,3 +36,48 @@ jobs:
             OCTAVE_VERSION=${{ matrix.version }}
           push: true
           tags: gnuoctave/octave-build:${{ matrix.version }}
+
+  octave:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version:
+        - {octave: 4.0.0, build: 4}
+        - {octave: 4.0.1, build: 4}
+        - {octave: 4.0.2, build: 4}
+        - {octave: 4.0.3, build: 4}
+        - {octave: 4.2.0, build: 4}
+        - {octave: 4.2.1, build: 4}
+        - {octave: 4.2.2, build: 4}
+        - {octave: 4.4.0, build: 5}
+        - {octave: 4.4.1, build: 5}
+        - {octave: 5.1.0, build: 5}
+        - {octave: 5.2.0, build: 5}
+        - {octave: 6.1.0, build: 6}
+        - {octave: 6.2.0, build: 6}
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: octave-${{ matrix.version.build }}.docker
+          build-args: |
+            OCTAVE_VERSION=${{ matrix.version.octave }}
+          push: true
+          tags: gnuoctave/octave:${{ matrix.version.version }}
