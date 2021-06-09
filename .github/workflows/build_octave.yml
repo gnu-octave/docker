@@ -102,7 +102,7 @@ jobs:
           if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
             BUILD_VER=5
           fi
-          echo "OCTAVE_BUILD_IMG=\"$BUILD_VER\"" >> $GITHUB_ENV
+          echo "OCTAVE_BUILD_IMG=$BUILD_VER" >> $GITHUB_ENV
       -
         name: Build and push
         uses: docker/build-push-action@v2
