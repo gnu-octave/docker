@@ -21,6 +21,13 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
         name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -36,25 +43,33 @@ jobs:
             OCTAVE_VERSION=${{ matrix.version }}
           push: true
           tags: gnuoctave/octave-build:${{ matrix.version }}
+      - # copy multiplatform image from dockerhub to ghcr
+        name: Push Image to multiple registries
+        uses: akhilerm/tag-push-action@v1.0.0
+        with:
+          src: docker.io/gnuoctave/build-octave:${{ matrix.version }}
+          dst: ghcr.io/gnuoctave/build-octave:${{ matrix.version }}
+
 
   octave:
     runs-on: ubuntu-latest
+    needs: build_octave
     strategy:
       matrix:
-        version:
-        - {octave: 4.0.0, build: 4}
-        - {octave: 4.0.1, build: 4}
-        - {octave: 4.0.2, build: 4}
-        - {octave: 4.0.3, build: 4}
-        - {octave: 4.2.0, build: 4}
-        - {octave: 4.2.1, build: 4}
-        - {octave: 4.2.2, build: 4}
-        - {octave: 4.4.0, build: 5}
-        - {octave: 4.4.1, build: 5}
-        - {octave: 5.1.0, build: 5}
-        - {octave: 5.2.0, build: 5}
-        - {octave: 6.1.0, build: 6}
-        - {octave: 6.2.0, build: 6}
+        version: 
+        - 4.0.0
+        - 4.0.1
+        - 4.0.2
+        - 4.0.3
+        - 4.2.0
+        - 4.2.1
+        - 4.2.2
+        - 4.4.0
+        - 4.4.1
+        - 5.1.0
+        - 5.2.0
+        - 6.1.0
+        - 6.2.0
     steps:
       -
         name: Checkout
@@ -66,6 +81,67 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Determine build image
+        run: |
+          VER=${{ matrix.version }}
+          BUILD_VER=${VER%%.*}
+          ## Exception, because of too old libraries.
+          if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
+            BUILD_VER=5
+          fi
+          echo "OCTAVE_BUILD_IMG=\"$BUILD_VER\"" >> $GITHUB_ENV
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: octave-${{ env.OCTAVE_BUILD_IMG }}.docker
+          build-args: |
+            OCTAVE_VERSION=${{ matrix.version }}
+          push: true
+          tags: gnuoctave/octave:${{ matrix.version }}
+      - # copy multiplatform image from dockerhub to ghcr
+        name: Push Image to multiple registries
+        uses: akhilerm/tag-push-action@v1.0.0
+        with:
+          src: docker.io/gnuoctave/octave:${{ matrix.version }}
+          dst: ghcr.io/gnuoctave/octave:${{ matrix.version }}
+          
+          
+  jupyterlab:
+    runs-on: ubuntu-latest
+    needs: [build_octave, octave]
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
         name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -75,9 +151,13 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: octave-${{ matrix.version.build }}.docker
-          build-args: |
-            OCTAVE_VERSION=${{ matrix.version.octave }}
+          context: jupyterlab
           push: true
-          tags: gnuoctave/octave:${{ matrix.version.version }}
+          tags: gnuoctave/octave:jupyterlab
+      - # copy multiplatform image from dockerhub to ghcr
+        name: Push Image to multiple registries
+        uses: akhilerm/tag-push-action@v1.0.0
+        with:
+          src: docker.io/gnuoctave/octave:jupyterlab
+          dst: ghcr.io/gnuoctave/octave:jupyterlab
+  
