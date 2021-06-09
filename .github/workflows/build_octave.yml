@@ -48,7 +48,7 @@ jobs:
         uses: akhilerm/tag-push-action@v1.0.0
         with:
           src: docker.io/gnuoctave/octave-build:${{ matrix.version }}
-          dst: ghcr.io/gnuoctave/octave-build:${{ matrix.version }}
+          dst: ghcr.io/gnu-octave/octave-build:${{ matrix.version }}
 
 
   octave:
@@ -118,7 +118,7 @@ jobs:
         uses: akhilerm/tag-push-action@v1.0.0
         with:
           src: docker.io/gnuoctave/octave:${{ matrix.version }}
-          dst: ghcr.io/gnuoctave/octave:${{ matrix.version }}
+          dst: ghcr.io/gnu-octave/octave:${{ matrix.version }}
           
           
   jupyterlab:
@@ -159,5 +159,5 @@ jobs:
         uses: akhilerm/tag-push-action@v1.0.0
         with:
           src: docker.io/gnuoctave/octave:jupyterlab
-          dst: ghcr.io/gnuoctave/octave:jupyterlab
+          dst: ghcr.io/gnu-octave/octave:jupyterlab
   
