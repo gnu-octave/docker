@@ -47,8 +47,8 @@ jobs:
         name: Push Image to multiple registries
         uses: akhilerm/tag-push-action@v1.0.0
         with:
-          src: docker.io/gnuoctave/build-octave:${{ matrix.version }}
-          dst: ghcr.io/gnuoctave/build-octave:${{ matrix.version }}
+          src: docker.io/gnuoctave/octave-build:${{ matrix.version }}
+          dst: ghcr.io/gnuoctave/octave-build:${{ matrix.version }}
 
 
   octave:
