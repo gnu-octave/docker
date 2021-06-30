@@ -26,6 +26,27 @@ See below for starting Octave with GUI.
 ![Image hierarchy.](doc/docker_image_hierachy.png)
 
 
+## Easy installation
+
+An installation script is provided,
+that can be called directly with this shell command:
+```bash
+## Install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -t singularity
+
+## Uninstall
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -u -t singularity
+```
+It creates links in `$HOME/bin`,
+as well as Desktop entries,
+to start the Octave **and JupyterLab**
+as if it was installed by the Linux distribution.
+
+**Note:** The system must have either Docker (= Podman) or Singularity
+installed and the user account must be setup to use those tools properly.
+Please adapt the shell command after `-t` respectively.
+
+
 ## Starting the Octave GUI
 
 Using Singularity, start Octave with GUI with this command:
