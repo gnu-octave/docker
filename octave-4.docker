@@ -44,9 +44,9 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 
 # Configure environment
 ENV SHELL=/bin/bash \
-    NB_USER=$NB_USER \
-    NB_UID=$NB_UID \
-    NB_GID=$NB_GID \
+    NB_USER="${NB_USER}" \
+    NB_UID=${NB_UID} \
+    NB_GID=${NB_GID} \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
@@ -61,13 +61,13 @@ RUN chmod a+rx /usr/local/bin/fix-permissions
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
     sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
-    useradd -l -m -s /bin/bash -N -u $NB_UID $NB_USER && \
+    useradd -l -m -s /bin/bash -N -u "${NB_UID}" "${NB_USER}" && \
     chmod g+w /etc/passwd && \
     fix-permissions "${HOME}"
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER $NB_UID
+USER ${NB_UID}
 
-WORKDIR $HOME
+WORKDIR "${HOME}"
 
 CMD ["start.sh" "octave-cli"]

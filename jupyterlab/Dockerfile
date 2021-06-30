@@ -49,9 +49,9 @@ RUN ln -s /usr/bin/octave /usr/bin/octave-cli-jupyter
 
 # Configure environment
 ENV SHELL=/bin/bash \
-    NB_USER=$NB_USER \
-    NB_UID=$NB_UID \
-    NB_GID=$NB_GID \
+    NB_USER="${NB_USER}" \
+    NB_UID=${NB_UID} \
+    NB_GID=${NB_GID} \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
@@ -59,7 +59,7 @@ ENV SHELL=/bin/bash \
     OCTAVE_EXECUTABLE=octave-cli-jupyter \
     JUPYTER_ENABLE_LAB=yes
 
-USER $NB_UID
+USER ${NB_UID}
 
 EXPOSE 8888
 
@@ -81,6 +81,6 @@ RUN sed -re "s/c.NotebookApp/c.ServerApp/g" \
     fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER $NB_UID
+USER ${NB_UID}
 
-WORKDIR $HOME
+WORKDIR "${HOME}"
