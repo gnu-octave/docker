@@ -31,10 +31,10 @@ See below for starting Octave with GUI.
 An installation script is provided,
 that can be called directly with this shell command:
 ```bash
-## Install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -t singularity
-
-## Uninstall
+```
+To remove the installation, type:
+```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -u -t singularity
 ```
 It creates links in `$HOME/bin`,
