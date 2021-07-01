@@ -8,7 +8,7 @@
 FROM  gnuoctave/octave:6.2.0
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2021-06-01
+ENV LAST_UPDATED=2021-07-01
 
 # Install JupyterLab
 
