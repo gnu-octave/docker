@@ -56,7 +56,7 @@ jobs:
     needs: build_octave
     strategy:
       matrix:
-        version: 
+        version:
         - 4.0.0
         - 4.0.1
         - 4.0.2
@@ -70,6 +70,7 @@ jobs:
         - 5.2.0
         - 6.1.0
         - 6.2.0
+        - 6.3.0
     steps:
       -
         name: Checkout
@@ -119,8 +120,8 @@ jobs:
         with:
           src: docker.io/gnuoctave/octave:${{ matrix.version }}
           dst: ghcr.io/gnu-octave/octave:${{ matrix.version }}
-          
-          
+
+
   jupyterlab:
     runs-on: ubuntu-latest
     needs: [build_octave, octave]
@@ -160,4 +161,4 @@ jobs:
         with:
           src: docker.io/gnuoctave/octave:jupyterlab
           dst: ghcr.io/gnu-octave/octave:jupyterlab
-  
+

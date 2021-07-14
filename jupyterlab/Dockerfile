@@ -5,7 +5,7 @@
 
 ## Synchronized with https://github.com/jupyter/docker-stacks/tree/master/base-notebook
 
-FROM  gnuoctave/octave:6.2.0
+FROM  gnuoctave/octave:6.3.0
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2021-07-01
