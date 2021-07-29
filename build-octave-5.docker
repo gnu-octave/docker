@@ -69,6 +69,7 @@ RUN apt-get --yes update  && \
       libxft-dev \
       locales \
       lpr \
+      lzip \
       make \
       mercurial \
       openjdk-11-jdk \
