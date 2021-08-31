@@ -9,7 +9,7 @@
 FROM  ubuntu:16.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2021-08-01
+ENV LAST_UPDATED=2021-09-01
 
 
 # Install security updates and required packages.

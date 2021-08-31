@@ -8,7 +8,7 @@
 FROM  gnuoctave/octave:6.3.0
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2021-08-01
+ENV LAST_UPDATED=2021-09-01
 
 # Install JupyterLab
 
@@ -55,7 +55,7 @@ ENV SHELL=/bin/bash \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
-    HOME=/home/$NB_USER \
+    HOME="/home/${NB_USER}" \
     OCTAVE_EXECUTABLE=octave-cli-jupyter \
     JUPYTER_ENABLE_LAB=yes
 
