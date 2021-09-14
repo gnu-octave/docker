@@ -10,14 +10,21 @@ LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2021-09-01
 
+ARG NB_USER="jovyan"
+ARG NB_UID="1111"
+ARG NB_GID="100"
+
+# Fix DL4006
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install JupyterLab
 
 USER root
 
 RUN chmod 777 /tmp        && \
-    apt-get --yes update  && \
+    apt-get update --yes  && \
     DEBIAN_FRONTEND="noninteractive" \
-    apt-get --no-install-recommends --yes install \
+    apt-get install --yes --no-install-recommends \
       tini                && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
@@ -32,16 +39,7 @@ RUN chmod 777 /tmp        && \
       matplotlib                 && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
-    rm -Rf /var/lib/apt/lists/*  && \
-    jupyter notebook --generate-config && \
-    jupyter lab clean
-
-ARG NB_USER="jovyan"
-ARG NB_UID="1111"
-ARG NB_GID="100"
-
-# Fix DL4006
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+    rm -Rf /var/lib/apt/lists/*
 
 # FIXME: Hack around Octave executable enforcement (hopefully one day removed):
 # https://github.com/Calysto/octave_kernel/blob/a613c29f40e22b1751164bca30df381799539f06/octave_kernel/kernel.py#L446-L461
@@ -60,6 +58,10 @@ ENV SHELL=/bin/bash \
     JUPYTER_ENABLE_LAB=yes
 
 USER ${NB_UID}
+
+RUN jupyter notebook --generate-config && \
+    jupyter lab clean && \
+    fix-permissions "/home/${NB_USER}"
 
 EXPOSE 8888
 
