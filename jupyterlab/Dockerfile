@@ -25,6 +25,7 @@ RUN chmod 777 /tmp        && \
     apt-get update --yes  && \
     DEBIAN_FRONTEND="noninteractive" \
     apt-get install --yes --no-install-recommends \
+      imagemagick            \
       tini                && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
