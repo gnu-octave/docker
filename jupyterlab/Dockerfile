@@ -8,7 +8,7 @@
 FROM  gnuoctave/octave:6.3.0
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2021-09-01
+ENV LAST_UPDATED=2021-10-01
 
 ARG NB_USER="jovyan"
 ARG NB_UID="1111"
