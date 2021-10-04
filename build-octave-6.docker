@@ -219,7 +219,7 @@ RUN GLPK_VERSION=5.0     && \
 
 # Install Sundials
 
-RUN SUNDIALS_VERSION=5.7.0  && \
+RUN SUNDIALS_VERSION=5.8.0  && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/LLNL/sundials/releases/download/v${SUNDIALS_VERSION}/sundials-${SUNDIALS_VERSION}.tar.gz" && \
