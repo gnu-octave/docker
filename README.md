@@ -6,16 +6,16 @@ The Octave images can be run by
 - [Docker](https://www.docker.com/):
   ```sh
   # Obtain image
-  docker pull docker.io/gnuoctave/octave:6.3.0
+  docker pull docker.io/gnuoctave/octave:6.4.0
   # Start container (command-line interface)
-  docker run -it --rm gnuoctave/octave:6.3.0 octave
+  docker run -it --rm gnuoctave/octave:6.4.0 octave
   ```
 - [Podman](https://podman.io/): as before, replace `docker` with `podman`.
 - [Singularity](https://sylabs.io/singularity/): most recommended for GUI mode.
   ```sh
-  singularity pull docker://gnuoctave/octave:6.3.0
+  singularity pull docker://gnuoctave/octave:6.4.0
   # Start container (command-line interface)
-  singularity run octave_6.3.0.sif
+  singularity run octave_6.4.0.sif
   ```
 
 See below for starting Octave with GUI.
@@ -51,7 +51,7 @@ Please adapt the shell command after `-t` respectively.
 
 Using Singularity, start Octave with GUI with this command:
 ```
-singularity exec --bind /run/user octave_6.3.0.sif octave --gui
+singularity exec --bind /run/user octave_6.4.0.sif octave --gui
 ```
 
 Using Docker or Podman run:
@@ -69,7 +69,7 @@ docker run \
   --volume="$HOME:$HOME:rw" \
   --volume="/dev:/dev:rw" \
   --volume="/run/user:/run/user:rw" \
-  docker.io/gnuoctave/octave:6.3.0 start.sh octave --gui
+  docker.io/gnuoctave/octave:6.4.0 start.sh octave --gui
 ```
 
 For old Octave 4.x.x versions you might additionally pass the

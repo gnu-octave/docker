@@ -1,3 +1,5 @@
+// dot -Tpng -o docker_image_hierachy.png docker_image_hierachy.dot
+
 digraph hierarchy {
   rankdir="LR";
   node [shape=box style=filled fontname="helvetica"];
@@ -16,8 +18,9 @@ digraph hierarchy {
   node [fillcolor=palegreen1];
   jupyterlab [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>jupyterlab</FONT></B>>];
   { rank = same;
-  v630 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>6.3.0</FONT></B>>];
+  v640 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>6.4.0</FONT></B>>];
   node [fillcolor=aquamarine];
+  v630 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>6.3.0</FONT></B>>];
   v620 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>6.2.0</FONT></B>>];
   v610 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>6.1.0</FONT></B>>];
   node [fillcolor=khaki1];
@@ -36,7 +39,8 @@ digraph hierarchy {
   v401 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>4.0.1</FONT></B>>];
   v400 [label=<docker.io/gnuoctave/octave:<B><FONT color='blue'>4.0.0</FONT></B>>];
   }
-  ubuntu2004 -> b6 -> v630  -> jupyterlab
+  ubuntu2004 -> b6 -> v640  -> jupyterlab
+                b6 -> v630
                 b6 -> v620
                 b6 -> v610
   ubuntu1804 -> b5 -> v520
@@ -52,7 +56,7 @@ digraph hierarchy {
                 b4 -> v400
   // ensure order
   b6 -> b5 -> b4 [style=invis]
-  v630 -> v620 -> v610
+  v640 -> v630 -> v620 -> v610
        -> v520 -> v510
        -> v441 -> v440
        -> v422 -> v421 -> v420

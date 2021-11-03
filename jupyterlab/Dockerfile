@@ -5,10 +5,10 @@
 
 ## Synchronized with https://github.com/jupyter/docker-stacks/tree/master/base-notebook
 
-FROM  gnuoctave/octave:6.3.0
+FROM  gnuoctave/octave:6.4.0
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2021-11-01
+ENV LAST_UPDATED=2021-11-03
 
 ARG NB_USER="jovyan"
 ARG NB_UID="1111"
