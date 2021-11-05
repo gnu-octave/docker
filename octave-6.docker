@@ -74,4 +74,5 @@ USER ${NB_UID}
 
 WORKDIR "${HOME}"
 
-CMD ["start.sh" "octave-cli"]
+ENTRYPOINT ["/usr/local/bin/start.sh"]
+CMD ["octave-cli"]

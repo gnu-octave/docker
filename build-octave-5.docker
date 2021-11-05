@@ -89,6 +89,7 @@ RUN apt-get --yes update  && \
       texlive-latex-extra \
       unzip \
       wget \
+      xvfb \
       zlib1g-dev \
       zip                        && \
     # Install required python packages
