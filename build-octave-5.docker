@@ -105,7 +105,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
 # Install OpenBLAS
 
-RUN OPENBLAS_VERSION=0.3.18 && \
+RUN OPENBLAS_VERSION=0.3.19 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
