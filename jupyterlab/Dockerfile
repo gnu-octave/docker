@@ -42,10 +42,6 @@ RUN chmod 777 /tmp        && \
     apt-get --yes autoremove     && \
     rm -Rf /var/lib/apt/lists/*
 
-# FIXME: Hack around Octave executable enforcement (hopefully one day removed):
-# https://github.com/Calysto/octave_kernel/blob/a613c29f40e22b1751164bca30df381799539f06/octave_kernel/kernel.py#L446-L461
-RUN ln -s /usr/bin/octave /usr/bin/octave-cli-jupyter
-
 # Configure environment
 ENV SHELL=/bin/bash \
     NB_USER="${NB_USER}" \
@@ -55,7 +51,6 @@ ENV SHELL=/bin/bash \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     HOME="/home/${NB_USER}" \
-    OCTAVE_EXECUTABLE=octave-cli-jupyter \
     JUPYTER_ENABLE_LAB=yes
 
 USER ${NB_UID}

@@ -301,16 +301,6 @@ echo \"Log file is: '\$LOG_FILE'.\"
 
 $JUPYTER_RUN_CMD > \$LOG_FILE 2>&1 &
 
-# use qt as the default for plots
-JUPYTER_OCTAVE_KERNEL_CONFIG_FILE=\"\$HOME/.jupyter/octave_kernel_config.py\"
-JUPYTER_OCTAVE_KERNEL_CONFIG=\"c.OctaveKernel.inline_toolkit = \\\"qt\\\"\"
-if [ ! -f \"\$JUPYTER_OCTAVE_KERNEL_CONFIG_FILE\" ] || \\
-   [ -z \"\$(grep \"\$JUPYTER_OCTAVE_KERNEL_CONFIG\" \"\$JUPYTER_OCTAVE_KERNEL_CONFIG_FILE\")\" ]
-then
-  mkdir -p \"\$HOME/.jupyter\"
-  echo \$JUPYTER_OCTAVE_KERNEL_CONFIG >> \$JUPYTER_OCTAVE_KERNEL_CONFIG_FILE
-fi
-
 for i in \$(seq 1 \$MAX_RETRIES)
 do
   echo \"Try to find JupyterLab server \$i of \$MAX_RETRIES\"
