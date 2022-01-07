@@ -149,7 +149,7 @@ case $CONTAINER_TOOL in
            --volume=\"/dev:/dev:rw\" \\
            --volume=\"/run/user:/run/user:rw\" \\
            $OCTAVE_IMAGE"
-    RUN_CMD="$R_CMD:\$OCTAVE_VERSION start.sh"
+    RUN_CMD="$R_CMD:\$OCTAVE_VERSION"
     JUPYTER_RUN_CMD="$R_CMD:$OCTAVE_JUPYTERLAB"
     ;;
   "singularity")
