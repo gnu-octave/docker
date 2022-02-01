@@ -50,8 +50,7 @@ ENV SHELL=/bin/bash \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
-    HOME="/home/${NB_USER}" \
-    JUPYTER_ENABLE_LAB=yes
+    HOME="/home/${NB_USER}"
 
 USER ${NB_UID}
 
