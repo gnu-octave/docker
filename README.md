@@ -76,7 +76,6 @@ graph LR
     class v400 age6;
 ```
 
-
 ## Easy installation
 
 An installation script is provided,
