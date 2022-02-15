@@ -23,7 +23,58 @@ See below for starting Octave with GUI.
 
 ## Hierarchy of all available images
 
-![Image hierarchy.](doc/docker_image_hierachy.png)
+```mermaid
+graph LR
+    U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
+    U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
+    U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
+    b6 --> v640[docker.io/gnuoctave/octave:<b>6.4.0</b>];
+    b6 --> v630[docker.io/gnuoctave/octave:<b>6.3.0</b>];
+    b6 --> v620[docker.io/gnuoctave/octave:<b>6.2.0</b>];
+    b6 --> v610[docker.io/gnuoctave/octave:<b>6.1.0</b>];
+    b5 --> v520[docker.io/gnuoctave/octave:<b>5.2.0</b>];
+    b5 --> v510[docker.io/gnuoctave/octave:<b>5.1.0</b>];
+    b5 --> v441[docker.io/gnuoctave/octave:<b>4.4.1</b>];
+    b5 --> v440[docker.io/gnuoctave/octave:<b>4.4.0</b>];
+    b4 --> v422[docker.io/gnuoctave/octave:<b>4.2.2</b>];
+    b4 --> v421[docker.io/gnuoctave/octave:<b>4.2.1</b>];
+    b4 --> v420[docker.io/gnuoctave/octave:<b>4.2.0</b>];
+    b4 --> v403[docker.io/gnuoctave/octave:<b>4.0.3</b>];
+    b4 --> v402[docker.io/gnuoctave/octave:<b>4.0.2</b>];
+    b4 --> v401[docker.io/gnuoctave/octave:<b>4.0.1</b>];
+    b4 --> v400[docker.io/gnuoctave/octave:<b>4.0.0</b>];
+    v640 --> jl[docker.io/gnuoctave/octave:<b>jupyterlab</b>];
+    classDef U fill:#ff7f24,stroke:#333,stroke-width:2px;
+    class U1 U;
+    class U2 U;
+    class U3 U;
+    classDef b fill:#ff0,stroke:#333,stroke-width:2px;
+    class b4 b;
+    class b5 b;
+    class b6 b;
+    classDef age1 fill:#9aff9a,stroke:#333,stroke-width:2px;
+    classDef age2 fill:#7fffd4,stroke:#333,stroke-width:2px;
+    classDef age3 fill:#fff68f,stroke:#333,stroke-width:2px;
+    classDef age4 fill:#ffd700,stroke:#333,stroke-width:2px;
+    classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
+    classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
+    class jl age1;
+    class v640 age1;
+    class v630 age2;
+    class v620 age2;
+    class v610 age2;
+    class v520 age3;
+    class v510 age3;
+    class v441 age4;
+    class v440 age4;
+    class v422 age5;
+    class v421 age5;
+    class v420 age5;
+    class v403 age6;
+    class v402 age6;
+    class v401 age6;
+    class v400 age6;
+```
 
 
 ## Easy installation
