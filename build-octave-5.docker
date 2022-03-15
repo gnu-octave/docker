@@ -135,7 +135,7 @@ RUN SUITE_SPARSE_VERSION=5.10.1  && \
     wget -q "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
     tar -xf       v${SUITE_SPARSE_VERSION}.tar.gz  && \
     cd SuiteSparse-${SUITE_SPARSE_VERSION}         && \
-    make -j8 library                           \
+    make library                           \
       LAPACK=                                  \
       BLAS=-lopenblas                          \
       UMFPACK_CONFIG=-D'LONGBLAS=long'         \
