@@ -127,7 +127,7 @@ RUN OPENBLAS_VERSION=0.3.20 && \
 
 # Install SuiteSparse
 
-RUN SUITE_SPARSE_VERSION=5.11.0  && \
+RUN SUITE_SPARSE_VERSION=5.10.1 && \
     mkdir -p /tmp/build         && \
     cd       /tmp/build         && \
     wget -q "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
