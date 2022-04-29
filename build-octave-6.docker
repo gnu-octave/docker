@@ -95,6 +95,7 @@ RUN apt-get --yes update  && \
     # Install required python packages
     #   - sympy, see https://savannah.gnu.org/bugs/?58491
     pip3 install --upgrade --no-cache-dir \
+      pip                           \
       sympy==1.5.1               && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
