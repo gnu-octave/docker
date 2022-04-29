@@ -183,7 +183,7 @@ RUN QRUPDATE_VERSION=1.1.2 && \
     wget -q "http://downloads.sourceforge.net/project/qrupdate/qrupdate/1.2/qrupdate-${QRUPDATE_VERSION}.tar.gz"  && \
     tar -xf qrupdate-${QRUPDATE_VERSION}.tar.gz       && \
     cd      qrupdate-${QRUPDATE_VERSION}              && \
-    make -j8                                             \
+    make lib                                             \
       PREFIX=/usr                                        \
       LAPACK=""                                          \
       BLAS="-lopenblas"                                  \

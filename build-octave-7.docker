@@ -182,7 +182,7 @@ RUN QRUPDATE_VERSION=1.1.2 && \
     wget -q "http://downloads.sourceforge.net/project/qrupdate/qrupdate/1.2/qrupdate-${QRUPDATE_VERSION}.tar.gz"  && \
     tar -xf qrupdate-${QRUPDATE_VERSION}.tar.gz       && \
     cd      qrupdate-${QRUPDATE_VERSION}              && \
-    make -j8                                             \
+    make lib                                             \
       PREFIX=/usr                                        \
       LAPACK=""                                          \
       BLAS="-lopenblas"                                  \
@@ -192,7 +192,7 @@ RUN QRUPDATE_VERSION=1.1.2 && \
       PREFIX=/usr                                        \
       LAPACK=""                                          \
       BLAS="-lopenblas"                                  \
-      FFLAGS="-L/usr/lib -fdefault-integer-8"         && \
+      FFLAGS="-L/usr/lib -fdefault-integer-8 -fallow-argument-mismatch" && \
     make install                                         \
       PREFIX=/usr                                        \
       LAPACK=""                                          \
