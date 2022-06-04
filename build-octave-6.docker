@@ -9,7 +9,7 @@
 FROM  ubuntu:20.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2022-04-01
+ENV LAST_UPDATED=2022-06-01
 
 
 # Install security updates and required packages.
