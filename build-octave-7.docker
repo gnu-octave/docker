@@ -93,10 +93,9 @@ RUN apt-get --yes update  && \
       zlib1g-dev \
       zip                        && \
     # Install required python packages
-    #   - sympy, see https://savannah.gnu.org/bugs/?58491
     pip3 install --upgrade --no-cache-dir \
       pip                           \
-      sympy==1.5.1               && \
+      sympy==1.10.1              && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
     rm -Rf /var/lib/apt/lists/*
