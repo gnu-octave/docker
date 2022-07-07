@@ -25,7 +25,7 @@ See below for starting Octave with GUI.
 
 ```mermaid
 graph LR
-    U4[ubuntu:<b>2004</b>] --> b7[docker.io/gnuoctave/octave-build:<b>7</b>];
+    U4[ubuntu:<b>2204</b>] --> b7[docker.io/gnuoctave/octave-build:<b>7</b>];
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
