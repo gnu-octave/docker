@@ -28,7 +28,6 @@ RUN chmod 777 /tmp        && \
       imagemagick            \
       tini                && \
     # Install required python packages
-    #   - sympy, see https://savannah.gnu.org/bugs/?58491
     pip3 install --upgrade --no-cache-dir \
       jupyterlab                    \
       octave_kernel                 \
@@ -36,7 +35,7 @@ RUN chmod 777 /tmp        && \
       jupyter-book                  \
       ghp-import                    \
       numpy                         \
-      sympy==1.5.1                  \
+      sympy==1.10.1                 \
       matplotlib                 && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
