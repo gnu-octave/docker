@@ -6,16 +6,16 @@ The Octave images can be run by
 - [Docker](https://www.docker.com/):
   ```sh
   # Obtain image
-  docker pull docker.io/gnuoctave/octave:7.1.0
+  docker pull docker.io/gnuoctave/octave:7.2.0
   # Start container (command-line interface)
-  docker run -it --rm gnuoctave/octave:7.1.0 octave
+  docker run -it --rm gnuoctave/octave:7.2.0 octave
   ```
 - [Podman](https://podman.io/): as before, replace `docker` with `podman`.
 - [Singularity](https://sylabs.io/singularity/): most recommended for GUI mode.
   ```sh
-  singularity pull docker://gnuoctave/octave:7.1.0
+  singularity pull docker://gnuoctave/octave:7.2.0
   # Start container (command-line interface)
-  singularity run octave_7.1.0.sif
+  singularity run octave_7.2.0.sif
   ```
 
 See below for starting Octave with GUI.
@@ -29,6 +29,7 @@ graph LR
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
+    b7 --> v720[docker.io/gnuoctave/octave:<b>7.2.0</b>];
     b7 --> v710[docker.io/gnuoctave/octave:<b>7.1.0</b>];
     b6 --> v640[docker.io/gnuoctave/octave:<b>6.4.0</b>];
     b6 --> v630[docker.io/gnuoctave/octave:<b>6.3.0</b>];
@@ -45,7 +46,7 @@ graph LR
     b4 --> v402[docker.io/gnuoctave/octave:<b>4.0.2</b>];
     b4 --> v401[docker.io/gnuoctave/octave:<b>4.0.1</b>];
     b4 --> v400[docker.io/gnuoctave/octave:<b>4.0.0</b>];
-    v710 --> jl[docker.io/gnuoctave/octave:<b>jupyterlab</b>];
+    v720 --> jl[docker.io/gnuoctave/octave:<b>jupyterlab</b>];
     classDef U fill:#ff7f24,stroke:#333,stroke-width:2px;
     class U1 U;
     class U2 U;
@@ -63,6 +64,7 @@ graph LR
     classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
     classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
     class jl age1;
+    class v720 age1;
     class v710 age1;
     class v640 age2;
     class v630 age2;
