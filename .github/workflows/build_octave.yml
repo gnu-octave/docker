@@ -55,8 +55,6 @@ jobs:
   octave:
     runs-on: ubuntu-latest
     needs: build_octave
-    env:
-      OCTAVE_LATEST: 7.2.0
     strategy:
       matrix:
         version:
@@ -126,20 +124,6 @@ jobs:
         with:
           src: docker.io/gnuoctave/octave:${{ matrix.version }}
           dst: ghcr.io/gnu-octave/octave:${{ matrix.version }}
-      -
-        name: Push "latest" tag
-        uses: akhilerm/tag-push-action@v2.0.0
-        if: ${{ matrix.version == env.OCTAVE_LATEST }}
-        with:
-          src: docker.io/gnuoctave/octave:${{ matrix.version }}
-          dst: docker.io/gnuoctave/octave:latest
-      -
-        name: Push "latest" tag
-        uses: akhilerm/tag-push-action@v2.0.0
-        if: ${{ matrix.version == env.OCTAVE_LATEST }}
-        with:
-          src: ghcr.io/gnu-octave/octave:${{ matrix.version }}
-          dst: ghcr.io/gnu-octave/octave:latest
 
 
   jupyterlab:
@@ -182,3 +166,21 @@ jobs:
           src: docker.io/gnuoctave/octave:jupyterlab
           dst: ghcr.io/gnu-octave/octave:jupyterlab
 
+
+  push-latest-tag:
+    runs-on: ubuntu-latest
+    needs: [build_octave, octave]
+    env:
+      OCTAVE_LATEST: 7.2.0
+    strategy:
+      matrix:
+        registry:
+        - docker.io
+        - ghcr.io
+    steps:
+      -
+        name: Push "latest" tag
+        uses: akhilerm/tag-push-action@v2.0.0
+        with:
+          src: ${{ env.registry }}/gnuoctave/octave:${{ env.OCTAVE_LATEST }}
+          dst: ${{ env.registry }}/gnuoctave/octave:latest
