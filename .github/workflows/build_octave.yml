@@ -129,14 +129,14 @@ jobs:
       -
         name: Push "latest" tag
         uses: akhilerm/tag-push-action@v2.0.0
-        if: ${{ matrix.version == $OCTAVE_LATEST }}
+        if: ${{ matrix.version == OCTAVE_LATEST }}
         with:
           src: docker.io/gnuoctave/octave:${{ matrix.version }}
           dst: docker.io/gnuoctave/octave:latest
       -
         name: Push "latest" tag
         uses: akhilerm/tag-push-action@v2.0.0
-        if: ${{ matrix.version == $OCTAVE_LATEST }}
+        if: ${{ matrix.version == OCTAVE_LATEST }}
         with:
           src: ghcr.io/gnu-octave/octave:${{ matrix.version }}
           dst: ghcr.io/gnu-octave/octave:latest
