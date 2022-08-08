@@ -182,5 +182,5 @@ jobs:
         name: Push "latest" tag
         uses: akhilerm/tag-push-action@v2.0.0
         with:
-          src: ${{ env.registry }}/gnuoctave/octave:${{ env.OCTAVE_LATEST }}
-          dst: ${{ env.registry }}/gnuoctave/octave:latest
+          src: ${{ matrix.registry }}/gnuoctave/octave:${{ env.OCTAVE_LATEST }}
+          dst: ${{ matrix.registry }}/gnuoctave/octave:latest
