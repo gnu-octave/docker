@@ -9,7 +9,7 @@
 FROM  ubuntu:20.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2022-08-01
+ENV LAST_UPDATED=2022-08-08
 
 
 # Install security updates and required packages.
@@ -106,7 +106,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
 # Install OpenBLAS
 
-RUN OPENBLAS_VERSION=0.3.20 && \
+RUN OPENBLAS_VERSION=0.3.21 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
