@@ -175,8 +175,8 @@ jobs:
     strategy:
       matrix:
         registry:
-        - docker.io
-        - ghcr.io
+        - docker.io/gnuoctave
+        - ghcr.io/gnu-octave
     steps:
       -
         name: Login to GitHub Container Registry
@@ -195,5 +195,5 @@ jobs:
         name: Push "latest" tag
         uses: akhilerm/tag-push-action@v2.0.0
         with:
-          src: ${{ matrix.registry }}/gnuoctave/octave:${{ env.OCTAVE_LATEST }}
-          dst: ${{ matrix.registry }}/gnuoctave/octave:latest
+          src: ${{ matrix.registry }}/octave:${{ env.OCTAVE_LATEST }}
+          dst: ${{ matrix.registry }}/octave:latest
