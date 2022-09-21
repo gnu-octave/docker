@@ -98,7 +98,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Determine build image
+        name: Determine build image version
         run: |
           VER=${{ matrix.version }}
           BUILD_VER=${VER%%.*}
@@ -108,7 +108,7 @@ jobs:
           fi
           echo "OCTAVE_BUILD_IMG=$BUILD_VER" >> $GITHUB_ENV
       -
-        name: Determine build image
+        name: Determine push "latest" tag
         run: |
           if [ "${{ matrix.version }}" = "${{ env.OCTAVE_LATEST }}" ];
           then
