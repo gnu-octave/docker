@@ -112,8 +112,8 @@ jobs:
         run: |
           if [ "${{ matrix.version }}" = "${{ env.OCTAVE_LATEST }}" ];
           then
-            echo "LATEST_TAGS=gnuoctave/octave:latest
-                     ghcr.io/gnu-octave/octave:latest" >> $GITHUB_ENV
+            echo "DOCKER_LATEST_TAG=gnuoctave/octave:latest" >> $GITHUB_ENV
+            echo "GHCR_LATEST_TAG=ghcr.io/gnu-octave/octave:latest" >> $GITHUB_ENV
           fi
       -
         name: Build and push
@@ -127,7 +127,8 @@ jobs:
           tags: |
             gnuoctave/octave:${{ matrix.version }}
             ghcr.io/gnu-octave/octave:${{ matrix.version }}
-            ${{ env.LATEST_TAGS }}
+            ${{ env.DOCKER_LATEST_TAG }}
+            ${{ env.GHCR_LATEST_TAG }}
 
 
   jupyterlab:
