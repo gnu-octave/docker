@@ -5,7 +5,7 @@
 ################
 
 # Default Octave Docker image to be used.
-OCTAVE_VERSION="7.1.0"
+OCTAVE_VERSION="7.2.0"
 OCTAVE_IMAGE="docker.io/gnuoctave/octave"
 
 # Choose default container tool in this order.
@@ -139,11 +139,7 @@ case $CONTAINER_TOOL in
            --network=host \\
            --env=\"DISPLAY\" \\
            --env=\"XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR\" \\
-           --env=\"NB_USER=\$USER\" \\
-           --env=\"NB_UID=\$(id -u)\" \\
-           --env=\"NB_GID=\$(id -g)\" \\
-           --env=\"GRANT_SUDO=yes\" \\
-           --user root \\
+           --user \$(id -u):\$(id -g) \\
            --volume=\"\$HOME:\$HOME:rw\" \\
            --volume=\"\$OCTAVE_CONF_DIR_HOST:\$OCTAVE_CONF_DIR:rw\" \\
            --volume=\"/dev:/dev:rw\" \\
