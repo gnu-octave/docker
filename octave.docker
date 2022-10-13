@@ -11,19 +11,30 @@ LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2022-10-01
 
+# Set options for Octave 64-bit build.
+RUN if [[ ${OCTAVE_VERSION_MAJOR} -gt 4 ]];        \
+    then                                           \
+        OCTAVE_CONFIGURE_ARGS="                    \
+            --prefix=/usr                          \
+            --enable-64                            \
+            --with-blas='-lopenblas'               \
+            ";                                     \
+        F77_INTEGER_8_FLAG='-fdefault-integer-8';  \
+    fi
 
 # Install Octave
 ARG OCTAVE_VERSION
 ARG OCTAVE_CONFIGURE_ARGS
-RUN mkdir -p /tmp/build   && \
-    cd       /tmp/build   && \
-    wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
-    tar -xf octave-${OCTAVE_VERSION}.tar.gz  && \
-    cd      octave-${OCTAVE_VERSION}         && \
-    ./configure    ${OCTAVE_CONFIGURE_ARGS}  && \
-    make -j8      && \
-    make check    && \
-    make install  && \
+RUN mkdir -p /tmp/build  \
+    && cd    /tmp/build  \
+    && wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  \
+    && tar -xf octave-${OCTAVE_VERSION}.tar.gz     \
+    && cd      octave-${OCTAVE_VERSION}            \
+    && ./configure    ${OCTAVE_CONFIGURE_ARGS}     \
+          F77_INTEGER_8_FLAG=${F77_INTEGER_8_FLAG} \
+    && make -j8      \
+    && make check    \
+    && make install  \
     rm -rf /tmp/build
 
 
