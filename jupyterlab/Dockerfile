@@ -1,20 +1,22 @@
-# gnu-octave/docker
+# gnuoctave/octave:jupterlab
 
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
 ## Synchronized with https://github.com/jupyter/docker-stacks/tree/master/base-notebook
 
-FROM  gnuoctave/octave:7.2.0
+ARG OCTAVE_VERSION
+FROM  gnuoctave/octave:${OCTAVE_VERSION}
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2022-09-01
+ENV LAST_UPDATED=2022-10-01
 
 ARG NB_USER="jovyan"
-ARG NB_UID="1111"
+ARG NB_UID="1000"
 ARG NB_GID="100"
 
-# Fix DL4006
+# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
+# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install JupyterLab

@@ -1,43 +1,30 @@
-# gnu-octave/docker
+# gnuoctave/octave
 
 # Please follow docker best practices
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
 
 # Docker images to build GNU Octave <https://www.octave.org>.
 
-
-FROM  gnuoctave/octave-build:4
+ARG OCTAVE_VERSION_MAJOR
+FROM  gnuoctave/octave-build:${OCTAVE_VERSION_MAJOR}
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2022-10-01
 
 
 # Install Octave
-
-# `OCTAVE_VERSION` specified by `DOCKER_TAG`, set in `hooks/build`.
-# https://docs.docker.com/docker-hub/builds/advanced/#environment-variables-for-building-and-testing
-
 ARG OCTAVE_VERSION
-
+ARG OCTAVE_CONFIGURE_ARGS
 RUN mkdir -p /tmp/build   && \
     cd       /tmp/build   && \
     wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  && \
     tar -xf octave-${OCTAVE_VERSION}.tar.gz  && \
     cd      octave-${OCTAVE_VERSION}         && \
-    ./configure   && \
+    ./configure    ${OCTAVE_CONFIGURE_ARGS}  && \
     make -j8      && \
     make check    && \
     make install  && \
     rm -rf /tmp/build
-
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    locale-gen
-
-# Configure environment
-ENV SHELL=/bin/bash \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
-    LANGUAGE=en_US.UTF-8
 
 
 WORKDIR /workdir

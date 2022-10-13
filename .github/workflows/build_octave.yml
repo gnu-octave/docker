@@ -106,23 +106,34 @@ jobs:
           if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
             BUILD_VER=5
           fi
-          echo "OCTAVE_BUILD_IMG=$BUILD_VER" >> $GITHUB_ENV
+          echo "OCTAVE_VERSION_MAJOR=${BUILD_VER}" >> $GITHUB_ENV
       -
-        name: Determine push "latest" tag
+        name: Set Octave configuration flags
+        if: ${{ env.OCTAVE_VERSION_MAJOR > 4 }}
         run: |
-          if [ "${{ matrix.version }}" = "${{ env.OCTAVE_LATEST }}" ];
-          then
-            echo "DOCKER_LATEST_TAG=gnuoctave/octave:latest" >> $GITHUB_ENV
-            echo "GHCR_LATEST_TAG=ghcr.io/gnu-octave/octave:latest" >> $GITHUB_ENV
-          fi
+          OCTAVE_CONFIGURE_ARGS="\
+            F77_INTEGER_8_FLAG='-fdefault-integer-8'  \
+            --prefix=/usr                             \
+            --enable-64                               \
+            --with-blas='-lopenblas'                  \
+            "
+          echo "OCTAVE_CONFIGURE_ARGS=${OCTAVE_CONFIGURE_ARGS}" >> $GITHUB_ENV
+      -
+        name: Set "latest" tag
+        if: ${{ matrix.version == env.OCTAVE_LATEST }}
+        run: |
+          echo "DOCKER_LATEST_TAG=gnuoctave/octave:latest" >> $GITHUB_ENV
+          echo "GHCR_LATEST_TAG=ghcr.io/gnu-octave/octave:latest" >> $GITHUB_ENV
       -
         name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: octave-${{ env.OCTAVE_BUILD_IMG }}.docker
+          file: octave.docker
           build-args: |
             OCTAVE_VERSION=${{ matrix.version }}
+            OCTAVE_VERSION_MAJOR=${{ env.OCTAVE_VERSION_MAJOR }}
+            OCTAVE_CONFIGURE_ARGS=${{ env.OCTAVE_CONFIGURE_ARGS }}
           push: true
           tags: |
             gnuoctave/octave:${{ matrix.version }}
@@ -164,6 +175,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: jupyterlab
+          file: jupyterlab/Dockerfile
+          build-args: |
+            OCTAVE_VERSION=${{ env.OCTAVE_LATEST }}
           push: true
           tags: |
             gnuoctave/octave:jupyterlab
