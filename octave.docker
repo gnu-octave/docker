@@ -11,9 +11,9 @@ LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2022-10-01
 
-# Set options for Octave 64-bit build.
-RUN if [[ ${OCTAVE_VERSION_MAJOR} -gt 4 ]];        \
+RUN if [ ${OCTAVE_VERSION_MAJOR} -gt 4 ];          \
     then                                           \
+        echo "Use Octave 64-bit build config.";    \
         OCTAVE_CONFIGURE_ARGS="                    \
             --prefix=/usr                          \
             --enable-64                            \
