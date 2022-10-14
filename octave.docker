@@ -11,20 +11,9 @@ LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
 ENV LAST_UPDATED=2022-10-01
 
-RUN if [ ${OCTAVE_VERSION_MAJOR} -gt 4 ];          \
-    then                                           \
-        echo "Use Octave 64-bit build config.";    \
-        OCTAVE_CONFIGURE_ARGS="                    \
-            --prefix=/usr                          \
-            --enable-64                            \
-            --with-blas='-lopenblas'               \
-            ";                                     \
-        F77_INTEGER_8_FLAG='-fdefault-integer-8';  \
-    fi
 
 # Install Octave
 ARG OCTAVE_VERSION
-ARG OCTAVE_CONFIGURE_ARGS
 RUN mkdir -p /tmp/build  \
     && cd    /tmp/build  \
     && wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  \

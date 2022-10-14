@@ -105,6 +105,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 
 
 # Configure environment
+
 ENV SHELL=/bin/bash \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
@@ -255,3 +256,9 @@ RUN SUNDIALS_VERSION=5.8.0  && \
     make -j8          && \
     make install      && \
     rm -rf /tmp/build
+
+
+# Set Octave 64-bit build options
+
+ENV OCTAVE_CONFIGURE_ARGS="--prefix=/usr --enable-64 --with-blas='-lopenblas'" \
+    F77_INTEGER_8_FLAG="-fdefault-integer-8"
