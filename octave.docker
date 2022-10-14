@@ -24,7 +24,7 @@ RUN mkdir -p /tmp/build  \
     && make -j8      \
     && make check    \
     && make install  \
-    rm -rf /tmp/build
+    && rm -rf /tmp/build
 
 
 WORKDIR /workdir
