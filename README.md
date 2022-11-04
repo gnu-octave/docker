@@ -8,20 +8,20 @@ The Octave images can be run by
   ```sh
   # Obtain image
 
-  docker pull docker.io/gnuoctave/octave:7.2.0
+  docker pull docker.io/gnuoctave/octave:7.3.0
 
   # Start container (command-line interface)
 
-  docker run -it --rm gnuoctave/octave:7.2.0 octave
+  docker run -it --rm gnuoctave/octave:7.3.0 octave
   ```
 - [Podman](https://podman.io/): as before, replace `docker` with `podman`.
 - [Singularity](https://sylabs.io/singularity/): most recommended for GUI mode.
   ```sh
-  singularity pull docker://gnuoctave/octave:7.2.0
+  singularity pull docker://gnuoctave/octave:7.3.0
 
   # Start container (command-line interface)
 
-  singularity run octave_7.2.0.sif
+  singularity run octave_7.3.0.sif
   ```
 
 See below for starting Octave with GUI.
@@ -52,7 +52,7 @@ Please adapt the shell command after `-t` respectively.
 
 Using Singularity, start Octave with GUI with this command:
 ```
-singularity exec --bind /run/user octave_7.2.0.sif octave --gui
+singularity exec --bind /run/user octave_7.3.0.sif octave --gui
 ```
 
 Using Docker or Podman run:
@@ -70,7 +70,7 @@ docker run \
   --volume="$HOME:$HOME:rw" \
   --volume="/dev:/dev:rw" \
   --volume="/run/user:/run/user:rw" \
-  docker.io/gnuoctave/octave:7.2.0 start.sh octave --gui
+  docker.io/gnuoctave/octave:7.3.0 start.sh octave --gui
 ```
 
 For old Octave 4.x.x versions you might additionally pass the
@@ -88,6 +88,7 @@ graph LR
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
+    b7 --> v730[docker.io/gnuoctave/octave:<b>7.3.0</b>];
     b7 --> v720[docker.io/gnuoctave/octave:<b>7.2.0</b>];
     b7 --> v710[docker.io/gnuoctave/octave:<b>7.1.0</b>];
     b6 --> v640[docker.io/gnuoctave/octave:<b>6.4.0</b>];
@@ -105,7 +106,7 @@ graph LR
     b4 --> v402[docker.io/gnuoctave/octave:<b>4.0.2</b>];
     b4 --> v401[docker.io/gnuoctave/octave:<b>4.0.1</b>];
     b4 --> v400[docker.io/gnuoctave/octave:<b>4.0.0</b>];
-    v720 --> jl[docker.io/gnuoctave/octave:<b>jupyterlab</b>];
+    v730 --> jl[docker.io/gnuoctave/octave:<b>jupyterlab</b>];
     classDef U fill:#ff7f24,stroke:#333,stroke-width:2px;
     class U1 U;
     class U2 U;
@@ -123,6 +124,7 @@ graph LR
     classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
     classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
     class jl age1;
+    class v730 age1;
     class v720 age1;
     class v710 age1;
     class v640 age2;
