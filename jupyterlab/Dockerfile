@@ -9,7 +9,7 @@ ARG OCTAVE_VERSION
 FROM  gnuoctave/octave:${OCTAVE_VERSION}
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2022-10-01
+ENV LAST_UPDATED=2022-11-01
 
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
