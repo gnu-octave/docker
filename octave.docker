@@ -14,9 +14,10 @@ ENV LAST_UPDATED=2023-03-01
 
 # Install Octave
 ARG OCTAVE_VERSION
+ARG GNU_MIRROR=https://ftpmirror.gnu.org/octave
 RUN mkdir -p /tmp/build  \
     && cd    /tmp/build  \
-    && wget -q "https://ftpmirror.gnu.org/octave/octave-${OCTAVE_VERSION}.tar.gz"  \
+    && wget -q "${GNU_MIRROR}/octave-${OCTAVE_VERSION}.tar.gz"  \
     && tar -xf octave-${OCTAVE_VERSION}.tar.gz     \
     && cd      octave-${OCTAVE_VERSION}            \
     && ./configure    ${OCTAVE_CONFIGURE_ARGS}     \

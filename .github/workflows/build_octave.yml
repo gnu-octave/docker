@@ -75,6 +75,7 @@ jobs:
         - 7.1.0
         - 7.2.0
         - 7.3.0
+        - 8.0.90
     steps:
       -
         name: Checkout
@@ -107,7 +108,14 @@ jobs:
           if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
             BUILD_VER=5
           fi
+          if [ "$VER" = "8.0.90" ]; then
+            BUILD_VER=7
+            GNU_MIRROR=https://alpha.gnu.org/gnu/octave/
+          else
+            GNU_MIRROR=https://ftpmirror.gnu.org/octave
+          fi
           echo "OCTAVE_VERSION_MAJOR=${BUILD_VER}" >> $GITHUB_ENV
+          echo "GNU_MIRROR=${GNU_MIRROR}" >> $GITHUB_ENV
       -
         name: Set "latest" tag
         if: ${{ matrix.version == env.OCTAVE_LATEST }}
@@ -123,6 +131,7 @@ jobs:
           build-args: |
             OCTAVE_VERSION=${{ matrix.version }}
             OCTAVE_VERSION_MAJOR=${{ env.OCTAVE_VERSION_MAJOR }}
+            GNU_MIRROR=${{ env.GNU_MIRROR }}
           push: true
           tags: |
             gnuoctave/octave:${{ matrix.version }}
