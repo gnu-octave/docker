@@ -87,6 +87,7 @@ graph LR
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
+    b7 --> v8090[docker.io/gnuoctave/octave:<b>8.0.90</b>];
     b7 --> v730[docker.io/gnuoctave/octave:<b>7.3.0</b>];
     b7 --> v720[docker.io/gnuoctave/octave:<b>7.2.0</b>];
     b7 --> v710[docker.io/gnuoctave/octave:<b>7.1.0</b>];
@@ -121,6 +122,7 @@ graph LR
     classDef age4 fill:#ffd700,stroke:#333,stroke-width:2px;
     classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
     classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
+    class v8090 age6;
     class v730 age1;
     class v720 age1;
     class v710 age1;
