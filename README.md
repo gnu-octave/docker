@@ -40,8 +40,7 @@ To remove the installation, type:
 ```
 It creates links in `$HOME/bin`,
 as well as Desktop entries,
-to start the Octave **and JupyterLab**
-as if it was installed by the Linux distribution.
+to start the Octave as if it was installed by the Linux distribution.
 
 **Note:** The system must have either Docker (= Podman) or Singularity
 installed and the user account must be setup to use those tools properly.
@@ -106,7 +105,6 @@ graph LR
     b4 --> v402[docker.io/gnuoctave/octave:<b>4.0.2</b>];
     b4 --> v401[docker.io/gnuoctave/octave:<b>4.0.1</b>];
     b4 --> v400[docker.io/gnuoctave/octave:<b>4.0.0</b>];
-    v730 --> jl[docker.io/gnuoctave/octave:<b>jupyterlab</b>];
     classDef U fill:#ff7f24,stroke:#333,stroke-width:2px;
     class U1 U;
     class U2 U;
@@ -123,7 +121,6 @@ graph LR
     classDef age4 fill:#ffd700,stroke:#333,stroke-width:2px;
     classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
     classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
-    class jl age1;
     class v730 age1;
     class v720 age1;
     class v710 age1;
