@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  OCTAVE_LATEST: 7.3.0
+  OCTAVE_LATEST: 8.1.0
 
 jobs:
   build_octave:
@@ -75,7 +75,7 @@ jobs:
         - 7.1.0
         - 7.2.0
         - 7.3.0
-        - 8.0.90
+        - 8.1.0
     steps:
       -
         name: Checkout
@@ -108,12 +108,10 @@ jobs:
           if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
             BUILD_VER=5
           fi
-          if [ "$VER" = "8.0.90" ]; then
+          if [ "$VER" = "8.1.0" ]; then
             BUILD_VER=7
-            GNU_MIRROR=https://alpha.gnu.org/gnu/octave/
-          else
-            GNU_MIRROR=https://ftpmirror.gnu.org/octave
           fi
+          GNU_MIRROR=https://ftpmirror.gnu.org/octave
           echo "OCTAVE_VERSION_MAJOR=${BUILD_VER}" >> $GITHUB_ENV
           echo "GNU_MIRROR=${GNU_MIRROR}" >> $GITHUB_ENV
       -
