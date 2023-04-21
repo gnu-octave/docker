@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  OCTAVE_LATEST: 8.1.0
+  OCTAVE_LATEST: 8.2.0
 
 jobs:
   build_octave:
@@ -78,6 +78,7 @@ jobs:
         - 7.2.0
         - 7.3.0
         - 8.1.0
+        - 8.2.0
     steps:
       -
         name: Checkout
@@ -110,7 +111,7 @@ jobs:
           if [ "$VER" = "4.4.0" ] || [ "$VER" = "4.4.1" ]; then
             BUILD_VER=5
           fi
-          if [ "$VER" = "8.1.0" ]; then
+          if [ "$VER" = "8.1.0" ] || [ "$VER" = "8.2.0" ]; then
             BUILD_VER=7
           fi
           GNU_MIRROR=https://ftpmirror.gnu.org/octave
