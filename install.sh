@@ -140,7 +140,7 @@ case $CONTAINER_TOOL in
            --volume=\"\$OCTAVE_CONF_DIR_HOST:\$OCTAVE_CONF_DIR:rw\" \\
            --volume=\"/dev:/dev:rw\" \\
            --volume=\"/run/user:/run/user:rw\" \\
-           --workdir=\"$HOME\" \\
+           --workdir=\"\$HOME\" \\
            $OCTAVE_IMAGE:\$OCTAVE_VERSION"
     ;;
   "singularity")
