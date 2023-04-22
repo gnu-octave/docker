@@ -32,14 +32,14 @@ See below for starting Octave with GUI.
 An installation script is provided,
 that can be called directly with this shell command:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -t singularity
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -t docker
 ```
 To remove the installation, type:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -u -t singularity
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -u -t docker
 ```
 It creates links in `$HOME/bin`,
-as well as Desktop entries,
+as well as a Desktop entry,
 to start the Octave as if it was installed by the Linux distribution.
 
 **Note:** The system must have either Docker (= Podman) or Singularity
@@ -60,16 +60,14 @@ docker run \
   --rm \
   --network=host \
   --env="DISPLAY" \
+  --env="HOME=$HOME" \
   --env="XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" \
-  --env="NB_USER=$USER" \
-  --env="NB_UID=$(id -u)" \
-  --env="NB_GID=$(id -g)" \
-  --env="GRANT_SUDO=yes" \
-  --user root \
+  --user $(id -u):$(id -g) \
   --volume="$HOME:$HOME:rw" \
   --volume="/dev:/dev:rw" \
   --volume="/run/user:/run/user:rw" \
-  docker.io/gnuoctave/octave:8.2.0 start.sh octave --gui
+  --workdir="$HOME" \
+  docker.io/gnuoctave/octave:8.2.0 octave --gui
 ```
 
 For old Octave 4.x.x versions you might additionally pass the

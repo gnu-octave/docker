@@ -133,12 +133,14 @@ case $CONTAINER_TOOL in
            --rm \\
            --network=host \\
            --env=\"DISPLAY\" \\
+           --env=\"HOME=\$HOME\" \\
            --env=\"XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR\" \\
            --user \$(id -u):\$(id -g) \\
            --volume=\"\$HOME:\$HOME:rw\" \\
            --volume=\"\$OCTAVE_CONF_DIR_HOST:\$OCTAVE_CONF_DIR:rw\" \\
            --volume=\"/dev:/dev:rw\" \\
            --volume=\"/run/user:/run/user:rw\" \\
+           --workdir=\"$HOME\" \\
            $OCTAVE_IMAGE:\$OCTAVE_VERSION"
     ;;
   "singularity")
