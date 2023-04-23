@@ -76,6 +76,9 @@ For old Octave 4.x.x versions you might additionally pass the
 > **Note:** The best experience was made with Singularity and Docker.
 > Podman had several flaws when run as unprivileged (non-root) user.
 
+> **Note:** The "Easy installation" described above does a few tweaks
+> to the `docker run` command to enable parallel usage of multiple Octave
+> versions and `sudo`-support for the non-root user.
 
 ## Hierarchy of all available images
 
@@ -149,3 +152,4 @@ graph LR
 - <https://siko1056.github.io/blog/2021/06/10/octave-docker.html>
   A longer blog article about this project including descriptions how to use
   and customize these images for specific needs.
+

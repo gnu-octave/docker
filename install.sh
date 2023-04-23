@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################
 ## Configuration
@@ -135,11 +135,12 @@ case $CONTAINER_TOOL in
            --env=\"DISPLAY\" \\
            --env=\"HOME=\$HOME\" \\
            --env=\"XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR\" \\
-           --user \$(id -u):\$(id -g) \\
            --volume=\"\$HOME:\$HOME:rw\" \\
            --volume=\"\$OCTAVE_CONF_DIR_HOST:\$OCTAVE_CONF_DIR:rw\" \\
            --volume=\"/dev:/dev:rw\" \\
            --volume=\"/run/user:/run/user:rw\" \\
+           --volume=\"$BIN_DIR/octave-docker-entrypoint.sh:/entrypoint.sh:ro\" \\
+           --entrypoint=\"/entrypoint.sh\" \\
            --workdir=\"\$HOME\" \\
            $OCTAVE_IMAGE:\$OCTAVE_VERSION"
     ;;
@@ -167,6 +168,7 @@ INSTALLED_FILES=" \
   $BIN_DIR/octave
   $BIN_DIR/octave-config
   $BIN_DIR/octave-cli
+  $BIN_DIR/octave-docker-entrypoint.sh
   $APP_DIR/octave-docker.desktop
   $ICON_DIR/octave-logo-128.png"
 for f in $INSTALLED_FILES
@@ -246,6 +248,21 @@ bash -c "$PULL_CMD"
 
 # Install start scripts.
 
+function get_docker_entrypoint()
+{
+    echo "#!/bin/bash
+
+# User is resolved during installation.
+# Entrypoint is executed inside running container.
+useradd -u $(id -u) -U -G sudo $(whoami)
+echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+CMD=\${1##*/}
+shift
+sudo -u $(whoami) \${CMD} \$@
+"
+}
+
+
 function get_Octave_start_script()
 {
   echo "#!/bin/bash
@@ -277,7 +294,9 @@ $RUN_CMD \"\${0##*/}\" \"\$@\"
 }
 
 
+get_docker_entrypoint   > $BIN_DIR/octave-docker-entrypoint.sh
 get_Octave_start_script > $BIN_DIR/octave
+chmod u+x $BIN_DIR/octave-docker-entrypoint.sh
 chmod u+x $BIN_DIR/octave
 ln -sf $BIN_DIR/octave $BIN_DIR/mkoctfile
 ln -sf $BIN_DIR/octave $BIN_DIR/octave-config
