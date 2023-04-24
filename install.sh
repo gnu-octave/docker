@@ -261,7 +261,7 @@ useradd  -g $(id -g) -u $(id -u) -G sudo $(id -un)
 echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 CMD=\${1##*/}
 shift
-sudo -u $(id -un) \${CMD} \$@
+sudo -E -u $(id -un) \${CMD} \$@
 "
 }
 
