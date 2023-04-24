@@ -256,11 +256,12 @@ function get_docker_entrypoint()
 
 # User is resolved during installation.
 # Entrypoint is executed inside running container.
-useradd -u $(id -u) -U -G sudo $(whoami)
+groupadd -g $(id -g) -f $(id -gn)
+useradd  -g $(id -g) -u $(id -u) -G sudo $(id -un)
 echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 CMD=\${1##*/}
 shift
-sudo -u $(whoami) \${CMD} \$@
+sudo -u $(id -un) \${CMD} \$@
 "
 }
 
