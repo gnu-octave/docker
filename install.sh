@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Make script agnostic of direct or `bash -c` calls.
+if [[ "$0" != *install.sh ]]
+then
+  set -- "$0" "$@"
+fi
+
 ################
 ## Configuration
 ################
@@ -36,7 +42,7 @@ function usage()
   then
     echo -e "\nError: $1"
   fi
-  echo -e "\nUsage: $0 with options:\n"
+  echo -e "\nUsage: install.sh with options:\n"
   echo -e "\t-d --debug           verbose debug output"
   echo -e "\t-f --force           overwrite previous installations"
   echo -e "\t-h --help            show this help"
@@ -93,6 +99,81 @@ function DEBUG_MSG()
     echo -e "\nDEBUG: $1\n"
   fi
 }
+
+
+################################
+## Detect previous installations
+################################
+
+PREV_INSTALL=""
+
+INSTALLED_FILES=" \
+  $BIN_DIR/mkoctfile
+  $BIN_DIR/octave
+  $BIN_DIR/octave-config
+  $BIN_DIR/octave-cli
+  $BIN_DIR/octave-docker-entrypoint.sh
+  $APP_DIR/octave-docker.desktop
+  $ICON_DIR/octave-logo-128.png"
+for f in $INSTALLED_FILES
+do
+  if [ -f "$f" ]
+  then
+    PREV_INSTALL+=" $f "
+  fi
+done
+
+if [ -n "$PREV_INSTALL" ]
+then
+  # Report previous installation.
+  if $FORCE
+  then
+    echo -e "\nFound previous installation (will be overwritten):\n"
+  else
+    echo -e "\nFound previous installation:\n"
+  fi
+  for f in $PREV_INSTALL
+  do
+    echo "  $f"
+  done
+  echo " "
+
+  # Ask user for confirmation (regard -f --force).
+  if ! $FORCE
+  then
+    while true; do
+      read -p "Enter [c] to cancel and [d] to delete previous installations. " yn
+      case $yn in
+          [Cc]*)
+            echo -e "\nInstallation canceled.\n"
+            exit 1
+            ;;
+          [Dd]*)
+            break
+            ;;
+          *)
+            echo "Please answer [c] or [d]."
+            ;;
+      esac
+    done
+  fi
+
+  for f in $PREV_INSTALL
+  do
+    rm -f "$f"
+  done
+fi
+
+
+# Finish here if only uninstall was requested.
+
+if $UNINSTALL_ONLY
+then
+  echo -e "\nUninstall finished.\n"
+  echo -e "  - Please delete Docker/Podman images (docker rmi ...)" \
+          " or any singularity SIF-files in ${BIN_DIR} manually.\n"
+  exit 0
+fi
 
 
 #####################################
@@ -155,85 +236,6 @@ case $CONTAINER_TOOL in
     echo -e "\nError: invalid container tool '$CONTAINER_TOOL'."
     usage
 esac
-
-
-################################
-## Detect previous installations
-################################
-
-PREV_INSTALL=""
-
-INSTALLED_FILES=" \
-  $BIN_DIR/mkoctfile
-  $BIN_DIR/octave
-  $BIN_DIR/octave-config
-  $BIN_DIR/octave-cli
-  $BIN_DIR/octave-docker-entrypoint.sh
-  $APP_DIR/octave-docker.desktop
-  $ICON_DIR/octave-logo-128.png"
-for f in $INSTALLED_FILES
-do
-  if [ -f "$f" ]
-  then
-    PREV_INSTALL+=" $f "
-  fi
-done
-
-if [ -n "$PREV_INSTALL" ]
-then
-  # Report previous installation.
-  echo -e "\nFound previous installation:\n"
-  for f in $PREV_INSTALL
-  do
-    echo "  $f"
-  done
-  echo " "
-
-  # Ask user for confirmation (regard -f --force).
-  if ! $FORCE
-  then
-    while true; do
-      read -p "Enter [c] to cancel and [d] to delete previous installations. " yn
-      case $yn in
-          [Cc]*)
-            echo -e "\nInstallation canceled.\n"
-            exit 1
-            ;;
-          [Dd]*)
-            break
-            ;;
-          *)
-            echo "Please answer [c] or [d]."
-            ;;
-      esac
-    done
-  fi
-
-  for f in $PREV_INSTALL
-  do
-    rm -f "$f"
-  done
-fi
-
-
-# Finish here if only uninstall was requested.
-
-if $UNINSTALL_ONLY
-then
-  echo -e "\nUninstall finished.\n"
-  if [ "$CONTAINER_TOOL" = "singularity" ]
-  then
-    if [ -f $SIF_FILE ]
-    then
-      echo -e "  Please remove the singularity SIF-file manually.\n"
-      echo -e "  rm -f $SIF_FILE\n"
-    fi
-  else
-    echo -e "  Please remove any '$CONTAINER_TOOL' images manually.\n"
-    echo -e "  $CONTAINER_TOOL rmi ${OCTAVE_IMAGE/docker.io\//}\n"
-  fi
-  exit 0
-fi
 
 
 ###################

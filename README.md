@@ -32,11 +32,11 @@ See below for starting Octave with GUI.
 An installation script is provided,
 that can be called directly with this shell command:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -t docker
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" -t docker
 ```
 To remove the installation, type:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" install -u -t docker
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/gnu-octave/docker/main/install.sh)" -u -f
 ```
 It creates links in `$HOME/bin`,
 as well as a Desktop entry,
