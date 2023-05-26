@@ -88,7 +88,7 @@ graph LR
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
-    b7 --> v810[docker.io/gnuoctave/octave:<b>8.2.0</b>];
+    b7 --> v820[docker.io/gnuoctave/octave:<b>8.2.0</b>];
     b7 --> v810[docker.io/gnuoctave/octave:<b>8.1.0</b>];
     b7 --> v730[docker.io/gnuoctave/octave:<b>7.3.0</b>];
     b7 --> v720[docker.io/gnuoctave/octave:<b>7.2.0</b>];
