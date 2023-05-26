@@ -152,4 +152,3 @@ graph LR
 - <https://siko1056.github.io/blog/2021/06/10/octave-docker.html>
   A longer blog article about this project including descriptions how to use
   and customize these images for specific needs.
-
