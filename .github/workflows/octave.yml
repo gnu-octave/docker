@@ -1,0 +1,99 @@
+name: Build Octave container images
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  OCTAVE_LATEST: 8.4.0
+
+jobs:
+  octave:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+        - 4.0.0
+        - 4.0.1
+        - 4.0.2
+        - 4.0.3
+        - 4.2.0
+        - 4.2.1
+        - 4.2.2
+        - 4.4.0
+        - 4.4.1
+        - 5.1.0
+        - 5.2.0
+        - 6.1.0
+        - 6.2.0
+        - 6.3.0
+        - 6.4.0
+        - 7.1.0
+        - 7.2.0
+        - 7.3.0
+        - 8.1.0
+        - 8.2.0
+        - 8.3.0
+        - 8.4.0
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Determine build image version
+        run: |
+          VER=${{ matrix.version }}
+          BUILD_VER=${VER%%.*}
+          ## Exception, because of too old libraries.
+          if [ "${VER:0:3}" = "4.4" ]; then
+            BUILD_VER=5
+          fi
+          if [ "${VER:0:1}" = "8" ]; then
+            BUILD_VER=7
+          fi
+          GNU_MIRROR=https://ftpmirror.gnu.org/octave
+          echo "OCTAVE_VERSION_MAJOR=${BUILD_VER}" >> $GITHUB_ENV
+          echo "GNU_MIRROR=${GNU_MIRROR}" >> $GITHUB_ENV
+      -
+        name: Set "latest" tag
+        if: ${{ matrix.version == env.OCTAVE_LATEST }}
+        run: |
+          echo "DOCKER_LATEST_TAG=gnuoctave/octave:latest" >> $GITHUB_ENV
+          echo "GHCR_LATEST_TAG=ghcr.io/gnu-octave/octave:latest" >> $GITHUB_ENV
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: octave.docker
+          build-args: |
+            OCTAVE_VERSION=${{ matrix.version }}
+            OCTAVE_VERSION_MAJOR=${{ env.OCTAVE_VERSION_MAJOR }}
+            GNU_MIRROR=${{ env.GNU_MIRROR }}
+          push: true
+          tags: |
+            gnuoctave/octave:${{ matrix.version }}
+            ghcr.io/gnu-octave/octave:${{ matrix.version }}
+            ${{ env.DOCKER_LATEST_TAG }}
+            ${{ env.GHCR_LATEST_TAG }}
