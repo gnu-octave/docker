@@ -3,6 +3,9 @@ name: Build Octave container images
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  # Rebuild container images on every 1st of a month at 02:03
+  schedule:
+    - cron: "3 2 1 * *"
 
 env:
   OCTAVE_LATEST: 8.4.0
