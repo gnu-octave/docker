@@ -9,7 +9,7 @@ ARG OCTAVE_VERSION_MAJOR
 FROM  gnuoctave/octave-build:${OCTAVE_VERSION_MAJOR}
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2023-06-01
+ENV LAST_UPDATED=2023-11-19
 
 
 # Install Octave

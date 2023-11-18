@@ -9,7 +9,7 @@
 FROM  ubuntu:22.04
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2023-06-01
+ENV LAST_UPDATED=2023-11-19
 
 
 # Install security updates and required packages.
@@ -92,10 +92,9 @@ RUN apt-get --yes update  && \
       xvfb \
       zlib1g-dev \
       zip                        && \
-    # Install required python packages
     pip3 install --upgrade --no-cache-dir \
       pip                           \
-      sympy==1.10.1              && \
+      sympy                      && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
     rm -Rf /var/lib/apt/lists/*
@@ -115,7 +114,7 @@ ENV SHELL=/bin/bash \
 
 # Install OpenBLAS
 
-RUN OPENBLAS_VERSION=0.3.21 && \
+RUN OPENBLAS_VERSION=0.3.25 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
@@ -137,7 +136,7 @@ RUN OPENBLAS_VERSION=0.3.21 && \
 
 # Install SuiteSparse
 
-RUN SUITE_SPARSE_VERSION=5.10.1 && \
+RUN SUITE_SPARSE_VERSION=7.3.1 && \
     mkdir -p /tmp/build         && \
     cd       /tmp/build         && \
     wget -q "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
@@ -162,7 +161,7 @@ RUN SUITE_SPARSE_VERSION=5.10.1 && \
 
 # Install ARPACK NG
 
-RUN ARPACK_NG_VERSION=3.8.0 && \
+RUN ARPACK_NG_VERSION=3.9.1 && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/opencollab/arpack-ng/archive/${ARPACK_NG_VERSION}.tar.gz" && \
@@ -231,7 +230,7 @@ RUN GLPK_VERSION=5.0     && \
 
 # Install Sundials
 
-RUN SUNDIALS_VERSION=5.8.0  && \
+RUN SUNDIALS_VERSION=6.6.2  && \
     mkdir -p /tmp/build     && \
     cd       /tmp/build     && \
     wget -q "https://github.com/LLNL/sundials/releases/download/v${SUNDIALS_VERSION}/sundials-${SUNDIALS_VERSION}.tar.gz" && \
@@ -242,8 +241,8 @@ RUN SUNDIALS_VERSION=5.8.0  && \
     cmake                                          \
       -DEXAMPLES_ENABLE_C=OFF                      \
       -DENABLE_KLU=ON                              \
-      -DKLU_INCLUDE_DIR=/usr/include/suitesparse   \
-      -DKLU_LIBRARY_DIR=/usr/lib                   \
+      -DKLU_INCLUDE_DIR=/usr/local/include/suitesparse \
+      -DKLU_LIBRARY_DIR=/usr/local/lib             \
       -DBUILD_ARKODE=OFF                           \
       -DBUILD_CVODE=OFF                            \
       -DBUILD_CVODES=OFF                           \
@@ -255,6 +254,16 @@ RUN SUNDIALS_VERSION=5.8.0  && \
       ..              && \
     make -j8          && \
     make install      && \
+    rm -rf /tmp/build
+
+
+# Install RapidJSON header library
+
+RUN mkdir -p /tmp/build      && \
+    cd       /tmp/build      && \
+    wget -q "https://github.com/Tencent/rapidjson/archive/refs/heads/master.tar.gz" && \
+    tar -xf master.tar.gz    && \
+    cp -R rapidjson-master/include/rapidjson /usr/include && \
     rm -rf /tmp/build
 
 
