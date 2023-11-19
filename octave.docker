@@ -17,7 +17,8 @@ RUN apt-get --yes update  && \
     apt-get --yes upgrade && \
     pip3 install --upgrade --no-cache-dir \
       pip                           \
-      sympy                      && \
+      sympy                         \
+      || true                    && \
     apt-get --yes clean          && \
     apt-get --yes autoremove     && \
     rm -Rf /var/lib/apt/lists/*
