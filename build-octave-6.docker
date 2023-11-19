@@ -42,6 +42,7 @@ RUN apt-get --yes update  && \
       icoutils \
       info \
       less \
+      libarpack2-dev \
       libcurl4-gnutls-dev \
       libfftw3-dev \
       libfltk1.3-dev \
@@ -49,21 +50,26 @@ RUN apt-get --yes update  && \
       libfreetype6-dev \
       libgl1-mesa-dev \
       libgl2ps-dev \
+      libglpk-dev \
       libgmp-dev \
       libgnutls28-dev \
       libgpgme-dev \
       libgraphicsmagick++1-dev \
       libhdf5-dev \
       libmpfr-dev \
+      libopenblas-dev \
       libosmesa6-dev \
       libpcre3-dev \
       libqhull-dev \
+      libqrupdate-dev \
       libqscintilla2-qt5-dev \
       libqt5opengl5-dev \
       libreadline-dev \
       librsvg2-bin \
       libseccomp-dev \
       libsndfile1-dev \
+      libsuitesparse-dev \
+      libsundials-dev \
       libssl-dev \
       libtool \
       libxft-dev \
@@ -110,154 +116,3 @@ ENV SHELL=/bin/bash \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-
-
-# Install OpenBLAS
-
-RUN OPENBLAS_VERSION=0.3.25 && \
-    mkdir -p /tmp/build     && \
-    cd       /tmp/build     && \
-    wget -q "https://github.com/xianyi/OpenBLAS/archive/v${OPENBLAS_VERSION}.tar.gz" && \
-    tar -xf    v${OPENBLAS_VERSION}.tar.gz  && \
-    cd OpenBLAS-${OPENBLAS_VERSION}         && \
-    make -j8             \
-      BINARY=64          \
-      INTERFACE64=1      \
-      DYNAMIC_ARCH=1     \
-      DYNAMIC_OLDER=1    \
-      CONSISTENT_FPCSR=1 \
-      USE_THREAD=1       \
-      USE_OPENMP=1       \
-      NUM_THREADS=256 && \
-    make install         \
-      PREFIX=/usr     && \
-    rm -rf /tmp/build
-
-
-# Install SuiteSparse
-
-RUN SUITE_SPARSE_VERSION=7.3.1 && \
-    mkdir -p /tmp/build         && \
-    cd       /tmp/build         && \
-    wget -q "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
-    tar -xf       v${SUITE_SPARSE_VERSION}.tar.gz  && \
-    cd SuiteSparse-${SUITE_SPARSE_VERSION}         && \
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/build/SuiteSparse-'"${SUITE_SPARSE_VERSION}"'/lib  && \
-    make library                               \
-      LAPACK=                                  \
-      BLAS=-lopenblas                          \
-      UMFPACK_CONFIG=-D'LONGBLAS=long'         \
-      CHOLMOD_CONFIG=-D'LONGBLAS=long'         \
-      LDFLAGS='-L/tmp/build/SuiteSparse-'"${SUITE_SPARSE_VERSION}"'/lib'  && \
-    make install                               \
-      INSTALL=/usr                             \
-      INSTALL_INCLUDE=/usr/include/suitesparse \
-      INSTALL_DOC=/tmp/build/doc               \
-      LAPACK=                                  \
-      BLAS=-lopenblas                          \
-      LDFLAGS='-L/tmp/build/SuiteSparse-'"${SUITE_SPARSE_VERSION}"'/lib'  && \
-    rm -rf /tmp/build
-
-
-# Install ARPACK NG
-
-RUN ARPACK_NG_VERSION=3.9.1 && \
-    mkdir -p /tmp/build     && \
-    cd       /tmp/build     && \
-    wget -q "https://github.com/opencollab/arpack-ng/archive/${ARPACK_NG_VERSION}.tar.gz" && \
-    tar -xf      ${ARPACK_NG_VERSION}.tar.gz  && \
-    cd arpack-ng-${ARPACK_NG_VERSION}         && \
-    ./bootstrap                 && \
-    ./configure                    \
-      --prefix=/usr                \
-      --libdir=/usr/lib            \
-      --with-blas='-lopenblas'     \
-      --with-lapack=''             \
-      INTERFACE64=1                \
-      LT_SYS_LIBRARY_PATH=/usr/lib \
-      LDFLAGS='-L/usr/lib'      && \
-    make -j8                    && \
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib  && \
-    make check    && \
-    make install  && \
-    rm -rf /tmp/build
-
-
-# Install QRUPDATE
-
-RUN QRUPDATE_VERSION=1.1.2 && \
-    mkdir -p /tmp/build    && \
-    cd       /tmp/build    && \
-    wget -q "http://downloads.sourceforge.net/project/qrupdate/qrupdate/1.2/qrupdate-${QRUPDATE_VERSION}.tar.gz"  && \
-    tar -xf qrupdate-${QRUPDATE_VERSION}.tar.gz       && \
-    cd      qrupdate-${QRUPDATE_VERSION}              && \
-    make lib                                             \
-      PREFIX=/usr                                        \
-      LAPACK=""                                          \
-      BLAS="-lopenblas"                                  \
-      FFLAGS="-L/usr/lib -fdefault-integer-8"         && \
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib  && \
-    make test                                            \
-      PREFIX=/usr                                        \
-      LAPACK=""                                          \
-      BLAS="-lopenblas"                                  \
-      FFLAGS="-L/usr/lib -fdefault-integer-8"         && \
-    make install                                         \
-      PREFIX=/usr                                        \
-      LAPACK=""                                          \
-      BLAS="-lopenblas"                                  \
-      FFLAGS="-L/usr/lib -fdefault-integer-8"         && \
-    rm -rf /tmp/build
-
-
-# Install GLPK
-
-RUN GLPK_VERSION=5.0     && \
-    mkdir -p /tmp/build  && \
-    cd       /tmp/build  && \
-    wget -q "https://ftp.gnu.org/gnu/glpk/glpk-${GLPK_VERSION}.tar.gz"  && \
-    tar -xf glpk-${GLPK_VERSION}.tar.gz  && \
-    cd      glpk-${GLPK_VERSION}         && \
-    ./configure             \
-      --with-gmp            \
-      --prefix=/usr         \
-      --libdir=/usr/lib  && \
-    make -j8             && \
-    make check           && \
-    make install         && \
-    rm -rf /tmp/build
-
-
-# Install Sundials
-
-RUN SUNDIALS_VERSION=6.6.2  && \
-    mkdir -p /tmp/build     && \
-    cd       /tmp/build     && \
-    wget -q "https://github.com/LLNL/sundials/releases/download/v${SUNDIALS_VERSION}/sundials-${SUNDIALS_VERSION}.tar.gz" && \
-    tar -xf sundials-${SUNDIALS_VERSION}.tar.gz  && \
-    cd      sundials-${SUNDIALS_VERSION}         && \
-    mkdir build  && \
-    cd    build  && \
-    cmake                                          \
-      -DEXAMPLES_ENABLE_C=OFF                      \
-      -DENABLE_KLU=ON                              \
-      -DKLU_INCLUDE_DIR=/usr/local/include/suitesparse \
-      -DKLU_LIBRARY_DIR=/usr/local/lib             \
-      -DBUILD_ARKODE=OFF                           \
-      -DBUILD_CVODE=OFF                            \
-      -DBUILD_CVODES=OFF                           \
-      -DBUILD_IDA=ON                               \
-      -DBUILD_IDAS=OFF                             \
-      -DBUILD_KINSOL=OFF                           \
-      -DBUILD_CPODES=OFF                           \
-      -DCMAKE_INSTALL_PREFIX=/usr                  \
-      ..              && \
-    make -j8          && \
-    make install      && \
-    rm -rf /tmp/build
-
-
-# Set Octave 64-bit build options
-
-ENV OCTAVE_CONFIGURE_ARGS="--prefix=/usr --enable-64 --with-blas='-lopenblas'" \
-    F77_INTEGER_8_FLAG="-fdefault-integer-8"
