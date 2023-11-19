@@ -112,3 +112,18 @@ ENV SHELL=/bin/bash \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+
+# Install RapidJSON header library
+
+RUN mkdir -p /tmp/build      && \
+    cd       /tmp/build      && \
+    wget -q "https://github.com/Tencent/rapidjson/archive/refs/heads/master.tar.gz" && \
+    tar -xf master.tar.gz    && \
+    cp -R rapidjson-master/include/rapidjson /usr/include && \
+    rm -rf /tmp/build
+
+
+# Set Octave build options
+
+ENV OCTAVE_CONFIGURE_ARGS="--with-qhull='-lqhull_r'"

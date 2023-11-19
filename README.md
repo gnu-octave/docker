@@ -84,17 +84,17 @@ For old Octave 4.x.x versions you might additionally pass the
 
 ```mermaid
 graph LR
-    U4[ubuntu:<b>2204</b>] --> b7[docker.io/gnuoctave/octave-build:<b>7</b>];
+    U4[ubuntu:<b>2204</b>] --> b8[docker.io/gnuoctave/octave-build:<b>8</b>];
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
-    b7 --> v840[docker.io/gnuoctave/octave:<b>8.4.0</b>];
-    b7 --> v830[docker.io/gnuoctave/octave:<b>8.3.0</b>];
-    b7 --> v820[docker.io/gnuoctave/octave:<b>8.2.0</b>];
-    b7 --> v810[docker.io/gnuoctave/octave:<b>8.1.0</b>];
-    b7 --> v730[docker.io/gnuoctave/octave:<b>7.3.0</b>];
-    b7 --> v720[docker.io/gnuoctave/octave:<b>7.2.0</b>];
-    b7 --> v710[docker.io/gnuoctave/octave:<b>7.1.0</b>];
+    b8 --> v840[docker.io/gnuoctave/octave:<b>8.4.0</b>];
+    b8 --> v830[docker.io/gnuoctave/octave:<b>8.3.0</b>];
+    b8 --> v820[docker.io/gnuoctave/octave:<b>8.2.0</b>];
+    b8 --> v810[docker.io/gnuoctave/octave:<b>8.1.0</b>];
+    b6 --> v730[docker.io/gnuoctave/octave:<b>7.3.0</b>];
+    b6 --> v720[docker.io/gnuoctave/octave:<b>7.2.0</b>];
+    b6 --> v710[docker.io/gnuoctave/octave:<b>7.1.0</b>];
     b6 --> v640[docker.io/gnuoctave/octave:<b>6.4.0</b>];
     b6 --> v630[docker.io/gnuoctave/octave:<b>6.3.0</b>];
     b6 --> v620[docker.io/gnuoctave/octave:<b>6.2.0</b>];
@@ -119,7 +119,7 @@ graph LR
     class b4 b;
     class b5 b;
     class b6 b;
-    class b7 b;
+    class b8 b;
     classDef age1 fill:#9aff9a,stroke:#333,stroke-width:2px;
     classDef age2 fill:#7fffd4,stroke:#333,stroke-width:2px;
     classDef age3 fill:#fff68f,stroke:#333,stroke-width:2px;
@@ -130,9 +130,9 @@ graph LR
     class v830 age1;
     class v820 age1;
     class v810 age1;
-    class v730 age1;
-    class v720 age1;
-    class v710 age1;
+    class v730 age2;
+    class v720 age2;
+    class v710 age2;
     class v640 age2;
     class v630 age2;
     class v620 age2;
