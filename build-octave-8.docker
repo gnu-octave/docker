@@ -136,7 +136,7 @@ RUN OPENBLAS_VERSION=0.3.25 && \
 
 # Install SuiteSparse
 
-RUN SUITE_SPARSE_VERSION=7.3.1 && \
+RUN SUITE_SPARSE_VERSION=5.10.1 && \
     mkdir -p /tmp/build         && \
     cd       /tmp/build         && \
     wget -q "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v${SUITE_SPARSE_VERSION}.tar.gz"  && \
@@ -241,8 +241,8 @@ RUN SUNDIALS_VERSION=6.6.2  && \
     cmake                                          \
       -DEXAMPLES_ENABLE_C=OFF                      \
       -DENABLE_KLU=ON                              \
-      -DKLU_INCLUDE_DIR=/usr/local/include/suitesparse \
-      -DKLU_LIBRARY_DIR=/usr/local/lib             \
+      -DKLU_INCLUDE_DIR=/usr/include/suitesparse   \
+      -DKLU_LIBRARY_DIR=/usr/lib                   \
       -DBUILD_ARKODE=OFF                           \
       -DBUILD_CVODE=OFF                            \
       -DBUILD_CVODES=OFF                           \
