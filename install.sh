@@ -244,7 +244,7 @@ esac
 
 # Get images
 
-echo -e "\nPull '$OCTAVE_IMAGE:$OCTAVE_VERSON' image with '$CONTAINER_TOOL'...\n"
+echo -e "\nPull '$OCTAVE_IMAGE:$OCTAVE_VERSION' image with '$CONTAINER_TOOL'...\n"
 bash -c "$PULL_CMD"
 
 
