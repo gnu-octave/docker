@@ -40,10 +40,11 @@ jobs:
         - 8.2.0
         - 8.3.0
         - 8.4.0
+        - 9.1.0
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -74,6 +75,9 @@ jobs:
           fi
           if [ "${VER:0:1}" = "7" ]; then
             BUILD_VER=6
+          fi
+          if [ "${VER:0:1}" = "9" ]; then
+            BUILD_VER=8
           fi
           GNU_MIRROR=https://ftpmirror.gnu.org/octave
           echo "OCTAVE_VERSION_MAJOR=${BUILD_VER}" >> $GITHUB_ENV
