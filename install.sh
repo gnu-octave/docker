@@ -341,7 +341,7 @@ Name=GNU Octave
 StartupNotify=true
 Terminal=false
 Type=Application
-StartupWMClass=GNU Octave
+StartupWMClass=octave-gui
 Keywords=science;math;matrix;numerical computation;plotting;"
 }
 
