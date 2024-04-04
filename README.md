@@ -127,6 +127,7 @@ graph LR
     classDef age4 fill:#ffd700,stroke:#333,stroke-width:2px;
     classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
     classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
+    class v910 age1;
     class v840 age1;
     class v830 age1;
     class v820 age1;
