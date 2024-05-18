@@ -73,6 +73,14 @@ docker run \
 For old Octave 4.x.x versions you might additionally pass the
 `--env=QT_GRAPHICSSYSTEM=native` environment variable.
 
+The following error results from a missing `$HOME/.Xauthority` file:
+```
+Authorization required, but no authorization protocol specified
+octave: unable to open X11 DISPLAY
+octave: disabling GUI features
+```
+Create this file via `ln -s -f "$XAUTHORITY" $HOME/.Xauthority`.
+
 > **Note:** The best experience was made with Singularity and Docker.
 > Podman had several flaws when run as unprivileged (non-root) user.
 
