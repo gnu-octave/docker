@@ -11,7 +11,7 @@ fi
 ################
 
 # Default Octave Docker image to be used.
-OCTAVE_VERSION="9.1.0"
+OCTAVE_VERSION="9.2.0"
 OCTAVE_IMAGE="docker.io/gnuoctave/octave"
 
 # Choose default container tool in this order.

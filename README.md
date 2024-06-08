@@ -8,20 +8,20 @@ The Octave images can be run by
   ```sh
   # Obtain image
 
-  docker pull docker.io/gnuoctave/octave:9.1.0
+  docker pull docker.io/gnuoctave/octave:9.2.0
 
   # Start container (command-line interface)
 
-  docker run -it --rm gnuoctave/octave:9.1.0 octave
+  docker run -it --rm gnuoctave/octave:9.2.0 octave
   ```
 - [Podman](https://podman.io/): as before, replace `docker` with `podman`.
 - [Singularity](https://sylabs.io/singularity/): most recommended for GUI mode.
   ```sh
-  singularity pull docker://gnuoctave/octave:9.1.0
+  singularity pull docker://gnuoctave/octave:9.2.0
 
   # Start container (command-line interface)
 
-  singularity run octave_9.1.0.sif
+  singularity run octave_9.2.0.sif
   ```
 
 See below for starting Octave with GUI.
@@ -51,7 +51,7 @@ Please adapt the shell command after `-t` respectively.
 
 Using Singularity, start Octave with GUI with this command:
 ```
-singularity exec --bind /run/user octave_9.1.0.sif octave --gui
+singularity exec --bind /run/user octave_9.2.0.sif octave --gui
 ```
 
 Using Docker or Podman run:
@@ -67,7 +67,7 @@ docker run \
   --volume="/dev:/dev:rw" \
   --volume="/run/user:/run/user:rw" \
   --workdir="$HOME" \
-  docker.io/gnuoctave/octave:9.1.0 octave --gui
+  docker.io/gnuoctave/octave:9.2.0 octave --gui
 ```
 
 For old Octave 4.x.x versions you might additionally pass the
@@ -96,6 +96,7 @@ graph LR
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
+    b8 --> v920[docker.io/gnuoctave/octave:<b>9.2.0</b>];
     b8 --> v910[docker.io/gnuoctave/octave:<b>9.1.0</b>];
     b8 --> v840[docker.io/gnuoctave/octave:<b>8.4.0</b>];
     b8 --> v830[docker.io/gnuoctave/octave:<b>8.3.0</b>];
@@ -135,6 +136,7 @@ graph LR
     classDef age4 fill:#ffd700,stroke:#333,stroke-width:2px;
     classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
     classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
+    class v920 age1;
     class v910 age1;
     class v840 age1;
     class v830 age1;
