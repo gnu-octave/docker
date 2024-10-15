@@ -9,18 +9,14 @@ ARG OCTAVE_VERSION_MAJOR
 FROM  gnuoctave/octave-build:${OCTAVE_VERSION_MAJOR}
 LABEL maintainer="Kai T. Ohlhus <k.ohlhus@gmail.com>"
 
-ENV LAST_UPDATED=2023-11-19
+ENV LAST_UPDATED=2024-10-15
 
 
 # Update builder image with latest security updates
-RUN apt-get --yes update  && \
-    apt-get --yes upgrade && \
-    pip3 install --upgrade --no-cache-dir \
-      pip                           \
-      sympy                         \
-      || true                    && \
-    apt-get --yes clean          && \
-    apt-get --yes autoremove     && \
+RUN apt-get --yes update      && \
+    apt-get --yes upgrade     && \
+    apt-get --yes clean       && \
+    apt-get --yes autoremove  && \
     rm -Rf /var/lib/apt/lists/*
 
 

@@ -77,9 +77,6 @@ jobs:
           if [ "${VER:0:1}" = "7" ]; then
             BUILD_VER=6
           fi
-          if [ "${VER:0:1}" = "9" ]; then
-            BUILD_VER=8
-          fi
           GNU_MIRROR=https://ftpmirror.gnu.org/octave
           echo "OCTAVE_VERSION_MAJOR=${BUILD_VER}" >> $GITHUB_ENV
           echo "GNU_MIRROR=${GNU_MIRROR}" >> $GITHUB_ENV
