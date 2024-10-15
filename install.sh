@@ -256,8 +256,8 @@ function get_docker_entrypoint()
 
 # User is resolved during installation.
 # Entrypoint is executed inside running container.
-groupadd -g $(id -g) -f $(id -gn)
-useradd  -g $(id -g) -u $(id -u) -G sudo $(id -un)
+groupadd -g $(id -g)    $(id -gn)                  2> /dev/null || groupmod -n $(id -gn) ubuntu
+useradd  -g $(id -g) -u $(id -u) -G sudo $(id -un) 2> /dev/null || usermod  -l $(id -un) ubuntu
 echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 CMD=\${1##*/}
 shift
