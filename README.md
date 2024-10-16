@@ -92,12 +92,13 @@ Create this file via `ln -s -f "$XAUTHORITY" $HOME/.Xauthority`.
 
 ```mermaid
 graph LR
+    U5[ubuntu:<b>2404</b>] --> b9[docker.io/gnuoctave/octave-build:<b>9</b>];
     U4[ubuntu:<b>2204</b>] --> b8[docker.io/gnuoctave/octave-build:<b>8</b>];
     U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
-    b8 --> v920[docker.io/gnuoctave/octave:<b>9.2.0</b>];
-    b8 --> v910[docker.io/gnuoctave/octave:<b>9.1.0</b>];
+    b9 --> v920[docker.io/gnuoctave/octave:<b>9.2.0</b>];
+    b9 --> v910[docker.io/gnuoctave/octave:<b>9.1.0</b>];
     b8 --> v840[docker.io/gnuoctave/octave:<b>8.4.0</b>];
     b8 --> v830[docker.io/gnuoctave/octave:<b>8.3.0</b>];
     b8 --> v820[docker.io/gnuoctave/octave:<b>8.2.0</b>];
@@ -125,11 +126,13 @@ graph LR
     class U2 U;
     class U3 U;
     class U4 U;
+    class U5 U;
     classDef b fill:#ff0,stroke:#333,stroke-width:2px;
     class b4 b;
     class b5 b;
     class b6 b;
     class b8 b;
+    class b9 b;
     classDef age1 fill:#9aff9a,stroke:#333,stroke-width:2px;
     classDef age2 fill:#7fffd4,stroke:#333,stroke-width:2px;
     classDef age3 fill:#fff68f,stroke:#333,stroke-width:2px;
