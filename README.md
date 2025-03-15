@@ -88,6 +88,44 @@ Create this file via `ln -s -f "$XAUTHORITY" $HOME/.Xauthority`.
 > to the `docker run` command to enable parallel usage of multiple Octave
 > versions and `sudo`-support for the non-root user.
 
+
+## Use qt graphics_toolkit in headless environments
+
+If the container image is not started or startable as explained in the previous section,
+using the hosts graphics environment, only "gnuplot" is available:
+```
+docker run --rm -it gnuoctave/octave:9.4.0 bash
+
+root@03cb8555f83f:/workdir# octave --eval available_graphics_toolkits
+octave: X11 DISPLAY environment variable not set
+octave: disabling GUI features
+ans =
+{
+  [1,1] = gnuplot
+}
+```
+
+To make advanced "qt" graphics available in headless environments,
+one potential solution is install the following packages at container image startup
+and start Octave using `xvfb-run`:
+```
+$ apt update
+$ apt install --yes libgl1-mesa-dri mesa-utils
+$ xvfb-run octave --eval available_graphics_toolkits
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+ans =
+{
+  [1,1] = fltk
+  [1,2] = gnuplot
+  [1,3] = qt
+}
+```
+
+For details, see [Xvfb](https://en.wikipedia.org/wiki/Xvfb)
+and [#27](https://github.com/gnu-octave/docker/issues/27#issuecomment-2703629974)
+with thanks to [@ELC](https://github.com/ELC).
+
+
 ## Hierarchy of all available images
 
 ```mermaid
