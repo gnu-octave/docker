@@ -91,7 +91,7 @@ Create this file via `ln -s -f "$XAUTHORITY" $HOME/.Xauthority`.
 
 ## Use qt graphics_toolkit in headless environments
 
-If the container image is not started or startable as explained in the previous section,
+If the container image is not started or able to start as explained in the previous section,
 using the hosts graphics environment, only "gnuplot" is available:
 ```
 docker run --rm -it gnuoctave/octave:9.4.0 bash
@@ -109,8 +109,6 @@ To make advanced "qt" graphics available in headless environments,
 one potential solution is install the following packages at container image startup
 and start Octave using `xvfb-run`:
 ```
-$ apt update
-$ apt install --yes libgl1-mesa-dri mesa-utils
 $ xvfb-run octave --eval available_graphics_toolkits
 QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
 ans =

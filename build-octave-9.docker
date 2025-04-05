@@ -48,6 +48,7 @@ RUN apt-get --yes update  && \
       libfontconfig1-dev \
       libfreetype6-dev \
       libgl1-mesa-dev \
+      libgl1-mesa-dri \
       libgl2ps-dev \
       libgmp-dev \
       libgnutls28-dev \
@@ -72,6 +73,7 @@ RUN apt-get --yes update  && \
       lzip \
       make \
       mercurial \
+      mesa-utils \
       openjdk-11-jdk \
       openssh-client \
       perl \
