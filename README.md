@@ -15,7 +15,7 @@ The Octave images can be run by
   docker run -it --rm gnuoctave/octave:10.1.0 octave
   ```
 - [Podman](https://podman.io/): as before, replace `docker` with `podman`.
-- [Singularity](https://sylabs.io/singularity/): most recommended for GUI mode.
+- [Singularity](https://sylabs.io/singularity/):
   ```sh
   singularity pull docker://gnuoctave/octave:10.1.0
 
@@ -24,7 +24,7 @@ The Octave images can be run by
   singularity run octave_10.1.0.sif
   ```
 
-See below for starting Octave with GUI.
+See below for starting Octave with GUI and advanced options, like mounting the host's user directory.
 
 
 ## Easy installation
@@ -48,11 +48,6 @@ Please adapt the shell command after `-t` respectively.
 
 
 ## Starting the Octave GUI
-
-Using Singularity, start Octave with GUI with this command:
-```
-singularity exec --bind /run/user octave_10.1.0.sif octave --gui
-```
 
 Using Docker or Podman run:
 ```sh
@@ -87,6 +82,12 @@ Create this file via `ln -s -f "$XAUTHORITY" $HOME/.Xauthority`.
 > **Note:** The "Easy installation" described above does a few tweaks
 > to the `docker run` command to enable parallel usage of multiple Octave
 > versions and `sudo`-support for the non-root user.
+
+
+Using Singularity, start Octave with GUI with this command:
+```
+singularity exec --bind /run/user octave_10.1.0.sif octave --gui
+```
 
 
 ## Use qt graphics_toolkit in headless environments
