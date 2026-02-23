@@ -8,7 +8,7 @@ on:
     - cron: "3 2 1 * *"
 
 env:
-  OCTAVE_LATEST: 10.3.0
+  OCTAVE_LATEST: 11.1.0
 
 jobs:
   octave:
@@ -47,6 +47,7 @@ jobs:
         - 10.1.0
         - 10.2.0
         - 10.3.0
+        - 11.1.0
     steps:
       -
         name: Checkout
