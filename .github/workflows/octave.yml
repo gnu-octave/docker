@@ -83,7 +83,7 @@ jobs:
           if [ "${VER:0:1}" = "7" ]; then
             BUILD_VER=6
           fi
-          if [ "${VER:0:2}" = "10" ]; then
+          if [ "${VER:0:2}" = "10" ] || [ "${VER:0:2}" = "11" ]; then
             BUILD_VER=9
           fi
           GNU_MIRROR=https://ftpmirror.gnu.org/octave
