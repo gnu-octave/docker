@@ -171,12 +171,14 @@ graph LR
     class U3 U;
     class U4 U;
     class U5 U;
+    class U6 U;
     classDef b fill:#ff0,stroke:#333,stroke-width:2px;
     class b4 b;
     class b5 b;
     class b6 b;
     class b8 b;
     class b9 b;
+    class b11 b;
     classDef age1 fill:#9aff9a,stroke:#333,stroke-width:2px;
     classDef age2 fill:#7fffd4,stroke:#333,stroke-width:2px;
     classDef age3 fill:#fff68f,stroke:#333,stroke-width:2px;
