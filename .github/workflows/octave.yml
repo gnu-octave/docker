@@ -97,7 +97,7 @@ jobs:
           echo "GHCR_LATEST_TAG=ghcr.io/gnu-octave/octave:latest" >> $GITHUB_ENV
       -
         name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: octave.docker
