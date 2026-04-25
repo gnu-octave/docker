@@ -95,7 +95,7 @@ singularity exec --bind /run/user octave_11.1.0.sif octave --gui
 If the container image is not started or able to start as explained in the previous section,
 using the hosts graphics environment, only "gnuplot" is available:
 ```
-docker run --rm -it gnuoctave/octave:9.4.0 bash
+docker run --rm -it gnuoctave/octave:11.1.0 bash
 
 root@03cb8555f83f:/workdir# octave --eval available_graphics_toolkits
 octave: X11 DISPLAY environment variable not set
@@ -129,12 +129,13 @@ with thanks to [@ELC](https://github.com/ELC).
 
 ```mermaid
 graph LR
-    U5[ubuntu:<b>2404</b>] --> b9[docker.io/gnuoctave/octave-build:<b>9</b>];
-    U4[ubuntu:<b>2204</b>] --> b8[docker.io/gnuoctave/octave-build:<b>8</b>];
-    U3[ubuntu:<b>2004</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
-    U2[ubuntu:<b>1804</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
-    U1[ubuntu:<b>1604</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
-    b9 --> v1110[docker.io/gnuoctave/octave:<b>11.1.0</b>];
+    U6[ubuntu:<b>26.04</b>] --> b11[docker.io/gnuoctave/octave-build:<b>11</b>];
+    U5[ubuntu:<b>24.04</b>] --> b9[docker.io/gnuoctave/octave-build:<b>9</b>];
+    U4[ubuntu:<b>22.04</b>] --> b8[docker.io/gnuoctave/octave-build:<b>8</b>];
+    U3[ubuntu:<b>20.04</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
+    U2[ubuntu:<b>18.04</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
+    U1[ubuntu:<b>16.04</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
+    b11 --> v1110[docker.io/gnuoctave/octave:<b>11.1.0</b>];
     b9 --> v1030[docker.io/gnuoctave/octave:<b>10.3.0</b>];
     b9 --> v1020[docker.io/gnuoctave/octave:<b>10.2.0</b>];
     b9 --> v1010[docker.io/gnuoctave/octave:<b>10.1.0</b>];
