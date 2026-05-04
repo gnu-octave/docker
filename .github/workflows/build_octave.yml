@@ -3,6 +3,19 @@ name: Build Octave Builder container images
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Octave build image version to build'
+        required: true
+        default: '11'
+        type: choice
+        options:
+          - '4'
+          - '5'
+          - '6'
+          - '8'
+          - '9'
+          - '11'
 
 jobs:
   build_octave:
@@ -10,7 +23,8 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        version: [4, 5, 6, 8, 9, 11]
+        include:
+          - version: ${{ github.event.inputs.version }}
     steps:
       -
         name: Checkout
