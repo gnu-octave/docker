@@ -51,6 +51,7 @@ RUN apt-get --yes update  && \
       libgl1-mesa-dev \
       libgl1-mesa-dri \
       libgl2ps-dev \
+      libglu1-mesa-dev \
       libgmp-dev \
       libgnutls28-dev \
       libgpgme-dev \
@@ -60,8 +61,8 @@ RUN apt-get --yes update  && \
       libosmesa6-dev \
       libpcre2-dev \
       libqhull-dev \
-      libqscintilla2-qt5-dev \
-      libqt5opengl5-dev \
+      libqscintilla2-qt6-dev \
+      libqt6opengl6-dev \
       libreadline-dev \
       librsvg2-bin \
       libseccomp-dev \
@@ -83,9 +84,10 @@ RUN apt-get --yes update  && \
       pstoedit \
       python3-pip \
       python3-sympy \
-      qtbase5-dev \
-      qttools5-dev \
-      qttools5-dev-tools \
+      qt6-5compat-dev \
+      qt6-base-dev \
+      qt6-svg-plugins \
+      qt6-tools-dev \
       ssh-askpass \
       sudo \
       tar \
