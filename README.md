@@ -8,20 +8,20 @@ The Octave images can be run by
   ```sh
   # Obtain image
 
-  docker pull docker.io/gnuoctave/octave:11.1.0
+  docker pull docker.io/gnuoctave/octave:11.3.0
 
   # Start container (command-line interface)
 
-  docker run -it --rm gnuoctave/octave:11.1.0 octave
+  docker run -it --rm gnuoctave/octave:11.3.0 octave
   ```
 - [Podman](https://podman.io/): as before, replace `docker` with `podman`.
 - [Singularity](https://sylabs.io/singularity/):
   ```sh
-  singularity pull docker://gnuoctave/octave:11.1.0
+  singularity pull docker://gnuoctave/octave:11.3.0
 
   # Start container (command-line interface)
 
-  singularity run octave_11.1.0.sif
+  singularity run octave_11.3.0.sif
   ```
 
 See below for starting Octave with GUI and advanced options, like mounting the host's user directory.
@@ -62,7 +62,7 @@ docker run \
   --volume="/dev:/dev:rw" \
   --volume="/run/user:/run/user:rw" \
   --workdir="$HOME" \
-  docker.io/gnuoctave/octave:11.1.0 octave --gui
+  docker.io/gnuoctave/octave:11.3.0 octave --gui
 ```
 
 For old Octave 4.x.x versions you might additionally pass the
@@ -86,7 +86,7 @@ Create this file via `ln -s -f "$XAUTHORITY" $HOME/.Xauthority`.
 
 Using Singularity, start Octave with GUI with this command:
 ```
-singularity exec --bind /run/user octave_11.1.0.sif octave --gui
+singularity exec --bind /run/user octave_11.3.0.sif octave --gui
 ```
 
 
@@ -95,7 +95,7 @@ singularity exec --bind /run/user octave_11.1.0.sif octave --gui
 If the container image is not started or able to start as explained in the previous section,
 using the hosts graphics environment, only "gnuplot" is available:
 ```
-docker run --rm -it gnuoctave/octave:11.1.0 bash
+docker run --rm -it gnuoctave/octave:11.3.0 bash
 
 root@03cb8555f83f:/workdir# octave --eval available_graphics_toolkits
 octave: X11 DISPLAY environment variable not set
@@ -135,6 +135,7 @@ graph LR
     U3[ubuntu:<b>20.04</b>] --> b6[docker.io/gnuoctave/octave-build:<b>6</b>];
     U2[ubuntu:<b>18.04</b>] --> b5[docker.io/gnuoctave/octave-build:<b>5</b>];
     U1[ubuntu:<b>16.04</b>] --> b4[docker.io/gnuoctave/octave-build:<b>4</b>];
+    b11 --> v1130[docker.io/gnuoctave/octave:<b>11.3.0</b>];
     b11 --> v1110[docker.io/gnuoctave/octave:<b>11.1.0</b>];
     b9 --> v1030[docker.io/gnuoctave/octave:<b>10.3.0</b>];
     b9 --> v1020[docker.io/gnuoctave/octave:<b>10.2.0</b>];
@@ -185,32 +186,33 @@ graph LR
     classDef age4 fill:#ffd700,stroke:#333,stroke-width:2px;
     classDef age5 fill:#ffa500,stroke:#333,stroke-width:2px;
     classDef age6 fill:#ff6a6a,stroke:#333,stroke-width:2px;
+    class v1130 age1;
     class v1110 age1;
-    class v1030 age1;
-    class v1020 age1;
-    class v1010 age1;
-    class v940 age1;
-    class v930 age1;
-    class v920 age1;
-    class v910 age1;
-    class v840 age1;
-    class v830 age1;
-    class v820 age1;
-    class v810 age1;
-    class v730 age2;
-    class v720 age2;
-    class v710 age2;
-    class v640 age2;
-    class v630 age2;
-    class v620 age2;
-    class v610 age2;
-    class v520 age3;
-    class v510 age3;
-    class v441 age4;
-    class v440 age4;
-    class v422 age5;
-    class v421 age5;
-    class v420 age5;
+    class v1030 age2;
+    class v1020 age2;
+    class v1010 age2;
+    class v940 age2;
+    class v930 age2;
+    class v920 age2;
+    class v910 age2;
+    class v840 age3;
+    class v830 age3;
+    class v820 age3;
+    class v810 age3;
+    class v730 age3;
+    class v720 age3;
+    class v710 age3;
+    class v640 age4;
+    class v630 age4;
+    class v620 age4;
+    class v610 age4;
+    class v520 age5;
+    class v510 age5;
+    class v441 age6;
+    class v440 age6;
+    class v422 age6;
+    class v421 age6;
+    class v420 age6;
     class v403 age6;
     class v402 age6;
     class v401 age6;

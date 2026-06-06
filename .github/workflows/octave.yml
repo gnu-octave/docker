@@ -39,10 +39,11 @@ on:
           - 10.2.0
           - 10.3.0
           - 11.1.0
-        default: '11.1.0'
+          - 11.3.0
+        default: '11.3.0'
 
 env:
-  OCTAVE_LATEST: 11.1.0
+  OCTAVE_LATEST: 11.3.0
 
 jobs:
   octave:
